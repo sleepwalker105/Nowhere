@@ -1,0 +1,174 @@
+    <!DOCTYPE html>
+    <html lang="no">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Nowhere - Raskt og Effektivt</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;300;400;500;600;700&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="css/style.css">
+        <link rel="stylesheet" href="css/responsive.css">
+    </head>
+    <body>
+        <!-- Navigation Bar -->
+        <nav class="navbar">
+            <div class="nav-left">
+                <button class="nav-btn" data-page="home" data-key="nav-start">Start</button>
+                <button class="nav-btn" data-page="projects" data-key="nav-projects">Våre Prosjekter</button>
+                <button class="nav-btn" data-page="contact" data-key="nav-contact">Kontakt</button>
+            </div>
+            <div class="nav-right">
+                <button class="theme-toggle" id="themeToggle" title="Bytt tema">
+                    <span class="theme-icon">🌙</span>
+                </button>
+                <button class="lang-toggle" id="langToggle">NO</button>
+            </div>
+        </nav>
+
+        <!-- Language Selection Modal -->
+        <div class="lang-modal" id="langModal">
+            <div class="lang-modal-content">
+                <div class="lang-options">
+                    <button class="lang-option" data-lang="no">
+                        <span class="lang-flag">🇳🇴</span>
+                        <span class="lang-name">Norsk</span>
+                    </button>
+                    <button class="lang-option" data-lang="en">
+                        <span class="lang-flag">🇺🇸</span>
+                        <span class="lang-name">English</span>
+                    </button>
+                    <button class="lang-option" data-lang="pl">
+                        <span class="lang-flag">🇵🇱</span>
+                        <span class="lang-name">Polski</span>
+                    </button>
+                    <button class="lang-option" data-lang="ru">
+                        <span class="lang-flag">🇷🇺</span>
+                        <span class="lang-name">Русский</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Copy Notification -->
+        <div class="copy-notification" id="copyNotification">
+            <span data-key="copied-text">Kopiert!</span>
+        </div>
+
+        <!-- Modal for fullscreen image -->
+        <div class="modal" id="imageModal">
+            <div class="modal-content">
+                <span class="modal-close" id="modalClose">&times;</span>
+                <img class="modal-image" id="modalImage" src="" alt="">
+                <div class="modal-caption" id="modalCaption"></div>
+            </div>
+        </div>
+
+        <!-- Main Container -->
+        <div class="container">
+            <!-- Header -->
+            <header class="main-header">
+                <h1 class="logo">Glod Maling Service</h1>
+            </header>
+
+            <!-- Home Page Content -->
+            <div class="page-content" id="home-page">
+                <!-- Main Content Card -->
+                <div class="main-card card">
+                    <h2 class="card-title" data-key="main-title">Raskt og effektivt!</h2>
+                    <p class="card-text" data-key="main-text">Vi er et selskap med mange års erfaring og hundrevis av fornøyde kunder. Vårt motto er hastighet og kvalitet. Hvis du leter etter folk som kan sitt fag og ikke er redde for nye utfordringer, så har du kommet til rett sted.</p>
+                </div>
+
+                <!-- Feature Cards Grid -->
+                <div class="cards-grid">
+                    <div class="feature-card card">
+                        <h3 class="card-title" data-key="fast-title">Raskt</h3>
+                        <p class="card-text" data-key="fast-text">arbeidet utføres i kontinuerlig tempo innenfor tidsrammen som er avtalt på forhånd av spesialistteamet.</p>
+                    </div>
+                    
+                    <div class="feature-card card">
+                        <h3 class="card-title" data-key="quality-title">Kvalitet</h3>
+                        <p class="card-text" data-key="quality-text">I løpet av fem år har vi lært å levere det høyeste kvalitetsnivået på markedet, og vi kan trygt si at vi vil gjøre alt for å sikre din tilfredshet.</p>
+                    </div>
+                    
+                    <div class="feature-card card">
+                        <h3 class="card-title" data-key="team-title">Team</h3>
+                        <p class="card-text" data-key="team-text">Malerteamet gjennomgår opplæring og fullfører deretter praktisk opplæring under reelle forhold for å tilby de beste tjenestene på markedet.</p>
+                    </div>
+                    
+                    <div class="feature-card card">
+                        <h3 class="card-title" data-key="price-title">Pris</h3>
+                        <p class="card-text" data-key="price-text">til tross for den høyeste kvaliteten, ber vi ikke om mye i retur; tvert imot, vi streber etter å tilby deg de laveste prisene på markedet.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Projects Page Content -->
+            <div class="page-content" id="projects-page" style="display: none;">
+                <div class="projects-header">
+                    <h2 class="card-title" data-key="projects-title">Våre Prosjekter</h2>
+                    <p class="projects-description" data-key="projects-description">Bla gjennom våre fullførte malerprosjekter og se kvaliteten på arbeidet vårt</p>
+                </div>
+
+                <!-- Category Filter -->
+                <div class="category-filter">
+                    <button class="filter-btn active" data-category="all" data-key="filter-all">Alle</button>
+                    <button class="filter-btn" data-category="private" data-key="filter-private">Privat</button>
+                    <button class="filter-btn" data-category="public" data-key="filter-public">Offentlig</button>
+                    <button class="filter-btn" data-category="interior" data-key="filter-interior">Interiør</button>
+                </div>
+
+                <!-- Projects Gallery -->
+                <div class="gallery-container">
+                    <div class="gallery-grid" id="galleryGrid">
+                        <!-- Project items will be added here by JavaScript -->
+                    </div>
+                    
+                    <!-- More Soon Message -->
+                    <div class="more-soon-message" id="moreSoonMessage">
+                        <p data-key="more-soon">Mer kommer snart!</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Contact Page Content -->
+            <div class="page-content" id="contact-page" style="display: none;">
+                <div class="contact-card card">
+                    <h2 class="card-title" data-key="contact-title">Ta Kontakt</h2>
+                    <p class="contact-intro" data-key="contact-intro">Hvis vi har overbevist deg, foreslår vi at du kontakter oss for konsultasjon uten forsinkelse. Nedenfor er alle stedene hvor du kan kontakte oss:</p>
+                    
+                    <div class="contact-list">
+                        <div class="contact-item">
+                            <span class="contact-label" data-key="contact-email">E-post</span>
+                            <span class="contact-separator"> - </span>
+                            <span class="contact-value" data-contact="contact@nowhere.com">contact@nowhere.com</span>
+                        </div>
+                        
+                        <div class="contact-item">
+                            <span class="contact-label" data-key="contact-phone">Telefonnummer</span>
+                            <span class="contact-separator"> - </span>
+                            <span class="contact-value" data-contact="+47 123 45 678">+47 123 45 678</span>
+                        </div>
+                        
+                        <div class="contact-item">
+                            <span class="contact-label" data-key="contact-instagram">Instagram</span>
+                            <span class="contact-separator"> - </span>
+                            <span class="contact-value" data-contact="@nowhere_company">@nowhere_company</span>
+                        </div>
+                        
+                        <div class="contact-item">
+                            <span class="contact-label" data-key="contact-telegram">Telegram</span>
+                            <span class="contact-separator"> - </span>
+                            <span class="contact-value" data-contact="@nowhere_support">@nowhere_support</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script src="js/language.js"></script>
+        <script src="js/theme.js"></script>
+        <script src="js/projects.js"></script>
+        <script src="js/main.js"></script>
+    </body>
+    </html>
