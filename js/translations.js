@@ -1,13 +1,28 @@
 // Enhanced translations with user preference messages
 const translations = {
     no: {
-        // Existing translations...
+        // Navigation
         'company-name': 'Nordmaling AS',
         'nav-home': 'Hjem',
         'nav-projects': 'Prosjekter',
         'nav-services': 'Tjenester',
         'nav-map': 'Dekningsområde',
         'nav-contact': 'Kontakt',
+        
+        // Projects page
+        'our-projects': 'Våre Prosjekter',
+        'projects-description': 'Se eksempler på vårt arbeid og kvalitet',
+        'completed-projects': 'Fullførte kvalitetsprosjekter',
+        'project-search': 'Søk etter prosjekter...',
+        
+        // Filters
+        'filter-all': 'Alle',
+        'filter-exterior': 'Utendørs',
+        'filter-interior': 'Innendørs',
+        'filter-roof-painting': 'Tak',
+        'filter-roof-cleaning': 'Takrensing',
+        'filter-waste': 'Avfall',
+        'filter-other': 'Annet',
         
         // Hero section
         'hero-title': 'Profesjonell Malertjeneste i Norge',
@@ -81,20 +96,6 @@ const translations = {
         'other-areas-desc': 'Vi vurderer også prosjekter utenfor vårt hovedområde. Kontakt oss for å diskutere mulighetene!',
         'contact-us-btn': 'Kontakt oss',
         
-        // Projects
-        'our-projects': 'Våre prosjekter',
-        'projects-description': 'Se eksempler på vårt arbeid og kvalitet',
-        'project-search': 'Søk i prosjekter...',
-        'filter-all': 'Alle prosjekter',
-        'filter-exterior': 'Utendørs maling',
-        'filter-interior': 'Innendørs maling',
-        'filter-roof-painting': 'Takmaling',
-        'filter-roof-cleaning': 'Takrensing',
-        'filter-waste': 'Avfallshåndtering',
-        'filter-other': 'Annet',
-        'no-projects': 'Ingen prosjekter funnet',
-        'project-description': 'Prosjektbeskrivelse',
-        
         // Footer
         'footer-description': 'Profesjonell malertjeneste i Norge siden 2008',
         'footer-contact': 'Kontakt',
@@ -112,13 +113,28 @@ const translations = {
     },
     
     en: {
-        // Existing translations...
+        // Navigation
         'company-name': 'Nordmaling AS',
         'nav-home': 'Home',
         'nav-projects': 'Projects',
         'nav-services': 'Services',
         'nav-map': 'Coverage Area',
         'nav-contact': 'Contact',
+        
+        // Projects page
+        'our-projects': 'Our Projects',
+        'projects-description': 'See examples of our work and quality',
+        'completed-projects': 'Completed quality projects',
+        'project-search': 'Search projects...',
+        
+        // Filters
+        'filter-all': 'All',
+        'filter-exterior': 'Exterior',
+        'filter-interior': 'Interior',
+        'filter-roof-painting': 'Roof',
+        'filter-roof-cleaning': 'Roof Cleaning',
+        'filter-waste': 'Waste',
+        'filter-other': 'Other',
         
         // Hero section
         'hero-title': 'Professional Painting Services in Norway',
@@ -192,20 +208,6 @@ const translations = {
         'other-areas-desc': 'We also consider projects outside our main area. Contact us to discuss possibilities!',
         'contact-us-btn': 'Contact Us',
         
-        // Projects
-        'our-projects': 'Our projects',
-        'projects-description': 'See examples of our work and quality',
-        'project-search': 'Search projects...',
-        'filter-all': 'All projects',
-        'filter-exterior': 'Exterior painting',
-        'filter-interior': 'Interior painting',
-        'filter-roof-painting': 'Roof painting',
-        'filter-roof-cleaning': 'Roof cleaning',
-        'filter-waste': 'Waste management',
-        'filter-other': 'Other',
-        'no-projects': 'No projects found',
-        'project-description': 'Project Description',
-        
         // Footer
         'footer-description': 'Professional painting service in Norway since 2008',
         'footer-contact': 'Contact',
@@ -223,30 +225,12 @@ const translations = {
     }
 };
 
-const translations = {
-    no: {
-        // ... existing translations ...
-        'projects-count-single': 'prosjekt',
-        'projects-count-plural': 'prosjekter',
-        'completed-projects': 'Fullførte kvalitetsprosjekter',
-        'view-details': 'Se detaljer',
-        'share': 'Del',
-        // ... rest of translations
-    },
-    en: {
-        // ... existing translations ...
-        'projects-count-single': 'project',
-        'projects-count-plural': 'projects',
-        'completed-projects': 'Completed quality projects',
-        'view-details': 'View details',
-        'share': 'Share',
-        // ... rest of translations
-    }
-};
 // Apply translations function
 function applyTranslations(language) {
     const langData = translations[language];
     if (!langData) return;
+    
+    console.log('🌍 Applying translations for:', language);
     
     // Update all elements with data-translate attribute
     document.querySelectorAll('[data-translate]').forEach(element => {
@@ -273,11 +257,26 @@ function applyTranslations(language) {
         }
     }
     
-    console.log(`🌍 Translations applied for: ${language.toUpperCase()}`);
+    // Update projects count if on projects page
+    if (window.location.pathname.includes('projects.html')) {
+        setTimeout(() => {
+            const countElement = document.getElementById('projects-count');
+            if (countElement && window.projects) {
+                const total = window.projects.length;
+                if (language === 'en') {
+                    countElement.textContent = `${total} projects`;
+                } else {
+                    countElement.textContent = `${total} prosjekter`;
+                }
+            }
+        }, 100);
+    }
+    
+    console.log('✅ Translations applied successfully');
 }
 
 // Make functions available globally
 window.translations = translations;
 window.applyTranslations = applyTranslations;
 
-console.log('🌍 Enhanced translations loaded with user preferences support!');
+console.log('🌍 Enhanced translations loaded!');
