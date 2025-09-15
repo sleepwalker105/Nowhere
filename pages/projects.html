@@ -16,6 +16,35 @@
             color: white;
         }
         
+        .projects-hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+        
+        .projects-hero p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .projects-stats {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 15px;
+            margin: 2rem 0;
+            text-align: center;
+            box-shadow: var(--shadow);
+        }
+        
+        .projects-count {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+        
         .search-filter-section {
             background: var(--card-bg);
             padding: 2rem;
@@ -28,32 +57,46 @@
             display: flex;
             gap: 1rem;
             margin-bottom: 2rem;
+            position: relative;
         }
         
         .search-input {
             flex: 1;
-            padding: 1rem;
+            padding: 1rem 1rem 1rem 3rem;
             border: 2px solid var(--border-color);
             border-radius: 10px;
             font-size: 1rem;
             background: var(--bg-color);
             color: var(--text-color);
+            transition: all 0.3s ease;
         }
         
-        .search-btn {
-            background: var(--gradient);
-            color: white;
-            border: none;
-            padding: 1rem 2rem;
-            border-radius: 10px;
-            cursor: pointer;
-            font-weight: bold;
+        .search-input:focus {
+            border-color: var(--primary-color);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.1);
+        }
+        
+        .search-icon {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-color);
+            opacity: 0.6;
         }
         
         .filter-buttons {
             display: flex;
             flex-wrap: wrap;
             gap: 1rem;
+            align-items: center;
+        }
+        
+        .filter-label {
+            font-weight: bold;
+            color: var(--text-color);
+            margin-right: 0.5rem;
         }
         
         .filter-btn {
@@ -64,6 +107,8 @@
             border-radius: 25px;
             cursor: pointer;
             transition: all 0.3s ease;
+            font-size: 0.9rem;
+            white-space: nowrap;
         }
         
         .filter-btn.active,
@@ -71,13 +116,15 @@
             background: var(--primary-color);
             color: white;
             border-color: var(--primary-color);
+            transform: translateY(-2px);
         }
         
         .projects-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
             gap: 2rem;
             margin: 2rem 0;
+            min-height: 400px;
         }
         
         .project-card {
@@ -86,8 +133,9 @@
             overflow: hidden;
             box-shadow: var(--shadow);
             transition: all 0.3s ease;
-            cursor: pointer;
             position: relative;
+            opacity: 0;
+            transform: translateY(30px);
         }
         
         .project-card:hover {
@@ -98,10 +146,6 @@
         .project-image {
             width: 100%;
             height: 250px;
-            background: var(--gradient);
-            display: flex;
-            align-items: center;
-            justify-content: center;
             position: relative;
             overflow: hidden;
         }
@@ -114,8 +158,7 @@
         }
         
         .project-card:hover .project-image img {
-            filter: blur(2px);
-            transform: scale(1.1);
+            transform: scale(1.05);
         }
         
         .project-overlay {
@@ -124,7 +167,7 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: rgba(0,0,0,0.7);
+            background: rgba(0,0,0,0.8);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -136,41 +179,112 @@
             opacity: 1;
         }
         
-        .project-title-overlay {
-            color: white;
-            font-size: 1.5rem;
+        .project-actions {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .project-btn {
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
             font-weight: bold;
-            text-align: center;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
         }
         
-        .project-info {
-            padding: 1.5rem;
+        .project-btn.primary {
+            background: var(--primary-color);
+            color: white;
         }
         
-        .project-category {
+        .project-btn.secondary {
+            background: transparent;
+            color: white;
+            border: 2px solid white;
+        }
+        
+        .project-btn:hover {
+            transform: translateY(-2px);
+        }
+        
+        .project-category-badge {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
             background: var(--accent-color);
             color: var(--text-color);
             padding: 0.3rem 1rem;
             border-radius: 15px;
             font-size: 0.8rem;
             font-weight: bold;
-            display: inline-block;
+        }
+        
+        .project-content {
+            padding: 1.5rem;
+        }
+        
+        .project-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
             margin-bottom: 1rem;
         }
         
-        .project-name {
-            font-size: 1.2rem;
+        .project-title {
+            font-size: 1.3rem;
             font-weight: bold;
             color: var(--secondary-color);
-            margin-bottom: 0.5rem;
+            margin: 0;
+            flex: 1;
         }
         
-        .project-desc {
+        .project-date {
+            font-size: 0.9rem;
             color: var(--text-color);
-            line-height: 1.5;
+            opacity: 0.7;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
         }
         
-        .coming-soon {
+        .project-location {
+            color: var(--text-color);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+        
+        .project-description {
+            color: var(--text-color);
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+        
+        .project-stats {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            font-size: 0.9rem;
+            color: var(--text-color);
+            opacity: 0.8;
+        }
+        
+        .project-stats span {
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+        
+        .no-projects-message {
+            grid-column: 1 / -1;
             text-align: center;
             padding: 4rem 2rem;
             background: var(--card-bg);
@@ -178,94 +292,74 @@
             margin: 2rem 0;
         }
         
-        .coming-soon h2 {
-            color: var(--primary-color);
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-        }
-        
-        .admin-panel-btn {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background: var(--secondary-color);
-            color: white;
-            border: none;
-            padding: 1rem;
-            border-radius: 50%;
-            cursor: pointer;
-            font-size: 1.2rem;
-            box-shadow: var(--shadow);
-            transition: all 0.3s ease;
-        }
-        
-        .admin-panel-btn:hover {
-            transform: scale(1.1);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
-        }
-        
-        /* Modal Styles */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.8);
-            z-index: 2000;
-        }
-        
-        .modal.show {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        .modal-content {
-            background: var(--bg-color);
-            border-radius: 15px;
-            max-width: 90%;
-            max-height: 90%;
-            overflow: auto;
-            position: relative;
-        }
-        
-        .modal-close {
-            position: absolute;
-            top: 1rem;
-            right: 1rem;
-            background: var(--primary-color);
-            color: white;
-            border: none;
-            padding: 0.5rem;
-            border-radius: 50%;
-            cursor: pointer;
-            font-size: 1.2rem;
-            z-index: 1;
-        }
-        
-        .project-detail {
-            padding: 2rem;
-        }
-        
-        .project-detail h2 {
+        .no-projects-content h3 {
             color: var(--secondary-color);
             margin-bottom: 1rem;
         }
         
-        .project-images {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1rem;
-            margin: 2rem 0;
+        .clear-filters-btn {
+            background: var(--gradient);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
         }
         
-        .project-images img {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
-            border-radius: 10px;
+        .clear-filters-btn:hover {
+            transform: translateY(-2px);
+        }
+        
+        @media (max-width: 768px) {
+            .projects-hero h1 {
+                font-size: 2rem;
+            }
+            
+            .projects-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+            
+            .search-box {
+                flex-direction: column;
+            }
+            
+            .filter-buttons {
+                gap: 0.5rem;
+            }
+            
+            .filter-btn {
+                padding: 0.5rem 1rem;
+                font-size: 0.8rem;
+            }
+            
+            .project-actions {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+            
+            .project-btn {
+                padding: 0.6rem 1rem;
+                font-size: 0.9rem;
+            }
+        }
+        
+        /* Animation keyframes */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .project-card.animate {
+            animation: fadeInUp 0.6s ease forwards;
         }
     </style>
 </head>
@@ -278,7 +372,7 @@
             </div>
             <div class="nav-menu">
                 <a href="../index.html" class="nav-link" data-translate="nav-home">Hjem</a>
-                <a href="projects.html" class="nav-link active" data-translate="nav-projects">Prosjекter</a>
+                <a href="projects.html" class="nav-link active" data-translate="nav-projects">Prosjekter</a>
                 <a href="services.html" class="nav-link" data-translate="nav-services">Tjenester</a>
                 <a href="map.html" class="nav-link" data-translate="nav-map">Dekningsområde</a>
                 <a href="contact.html" class="nav-link" data-translate="nav-contact">Kontakt</a>
@@ -302,70 +396,57 @@
     <!-- Projects Hero -->
     <section class="projects-hero">
         <div class="container">
-            <h1 data-translate="projects-hero-title">Våre Prosjекter</h1>
-            <p data-translate="projects-hero-desc">Se eksempler på vårt arbeid og la deg inspirere</p>
+            <h1 data-translate="our-projects">Våre Prosjekter</h1>
+            <p data-translate="projects-description">Se eksempler på vårt arbeid og kvalitet</p>
+        </div>
+    </section>
+
+    <!-- Projects Stats -->
+    <section class="container" style="padding: 20px;">
+        <div class="projects-stats">
+            <div class="projects-count" id="projects-count">
+                Laster prosjekter...
+            </div>
+            <p>Fullførte kvalitetsprosjekter</p>
         </div>
     </section>
 
     <!-- Search and Filter -->
-    <section class="container" style="padding: 40px 20px;">
+    <section class="container" style="padding: 0 20px;">
         <div class="search-filter-section">
             <div class="search-box">
-                <input type="text" class="search-input" id="projectSearch" placeholder="Søk etter prosjекter..." data-translate-placeholder="search-placeholder">
-                <button class="search-btn" onclick="searchProjects()" data-translate="search-btn">Søk</button>
+                <i class="fas fa-search search-icon"></i>
+                <input type="text" 
+                       class="search-input" 
+                       id="project-search" 
+                       placeholder="Søk etter prosjekter..." 
+                       data-translate-placeholder="project-search">
             </div>
             
             <div class="filter-buttons">
-                <button class="filter-btn active" data-category="all" onclick="filterProjects('all')" data-translate="filter-all">Alle</button>
-                <button class="filter-btn" data-category="exterior" onclick="filterProjects('exterior')" data-translate="filter-exterior">Utendørs maling</button>
-                <button class="filter-btn" data-category="interior" onclick="filterProjects('interior')" data-translate="filter-interior">Innendørs maling</button>
-                <button class="filter-btn" data-category="roof-painting" onclick="filterProjects('roof-painting')" data-translate="filter-roof-painting">Takmaling</button>
-                <button class="filter-btn" data-category="roof-cleaning" onclick="filterProjects('roof-cleaning')" data-translate="filter-roof-cleaning">Takrensing</button>
-                <button class="filter-btn" data-category="waste" onclick="filterProjects('waste')" data-translate="filter-waste">Avfallshåndtering</button>
-                <button class="filter-btn" data-category="other" onclick="filterProjects('other')" data-translate="filter-other">Annet</button>
+                <span class="filter-label">Filter:</span>
+                <button class="filter-btn active" data-filter="all" data-translate="filter-all">Alle prosjekter</button>
+                <button class="filter-btn" data-filter="exterior" data-translate="filter-exterior">Utendørs maling</button>
+                <button class="filter-btn" data-filter="interior" data-translate="filter-interior">Innendørs maling</button>
+                <button class="filter-btn" data-filter="roof-painting" data-translate="filter-roof-painting">Takmaling</button>
+                <button class="filter-btn" data-filter="roof-cleaning" data-translate="filter-roof-cleaning">Takrensing</button>
+                <button class="filter-btn" data-filter="waste" data-translate="filter-waste">Avfallshåndtering</button>
+                <button class="filter-btn" data-filter="other" data-translate="filter-other">Annet</button>
             </div>
-        </div>
-
-        <!-- Projects Grid -->
-        <div class="projects-grid" id="projectsGrid">
-            <!-- Projects will be loaded here by JavaScript -->
-        </div>
-
-        <!-- Coming Soon -->
-        <div class="coming-soon">
-            <h2 data-translate="coming-soon-title">Mer kommer snart!</h2>
-            <p data-translate="coming-soon-desc">Vi jobber kontinuerlig med nye prosjекter. Kom tilbake snart for å se flere av våre arbeider.</p>
         </div>
     </section>
 
-    <!-- Admin Panel Button -->
-    <button class="admin-panel-btn" onclick="openAdminPanel()" title="Admin Panel">
-        <i class="fas fa-cog"></i>
-    </button>
-
-    <!-- Project Detail Modal -->
-    <div class="modal" id="projectModal">
-        <div class="modal-content">
-            <button class="modal-close" onclick="closeProjectModal()">
-                <i class="fas fa-times"></i>
-            </button>
-            <div class="project-detail" id="projectDetail">
-                <!-- Project details will be loaded here -->
+    <!-- Projects Grid -->
+    <section class="container" style="padding: 20px;">
+        <div class="projects-grid" id="projects-container">
+            <!-- Projects will be loaded here by JavaScript -->
+            <div style="grid-column: 1 / -1; text-align: center; padding: 4rem 2rem;">
+                <div style="font-size: 3rem; margin-bottom: 1rem;">🎨</div>
+                <h3>Laster prosjekter...</h3>
+                <p>Vennligst vent mens vi henter våre flotte prosjekter</p>
             </div>
         </div>
-    </div>
-
-    <!-- Admin Panel Modal -->
-    <div class="modal" id="adminModal">
-        <div class="modal-content">
-            <button class="modal-close" onclick="closeAdminPanel()">
-                <i class="fas fa-times"></i>
-            </button>
-            <div id="adminPanel">
-                <!-- Admin panel will be loaded here -->
-            </div>
-        </div>
-    </div>
+    </section>
 
     <!-- Footer -->
     <footer class="footer">
@@ -387,6 +468,7 @@
         </div>
     </footer>
 
+    <!-- Scripts in correct order -->
     <script src="../js/translations.js"></script>
     <script src="../js/main.js"></script>
     <script src="../js/projects.js"></script>
