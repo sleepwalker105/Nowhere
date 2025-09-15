@@ -1,4 +1,4 @@
-// Projects Management System for Nordmaling AS - Fixed Version
+// Projects Management System for Nordmaling AS - Debug Version
 let projects = [];
 let filteredProjects = [];
 let currentFilter = 'all';
@@ -8,42 +8,89 @@ let currentSearchTerm = '';
 window.projects = projects;
 
 // Проверяем загрузку
-console.log('Projects script loaded! 📋');
+console.log('🚀 Projects script loaded!');
 
 // Инициализация при загрузке страницы
 document.addEventListener('DOMContentLoaded', function() {
+    console.log('📄 DOM loaded, checking page...');
+    console.log('🔍 Current pathname:', window.location.pathname);
+    
     if (window.location.pathname.includes('projects.html')) {
-        console.log('Projects page detected, initializing...');
-        initializeProjects();
+        console.log('✅ Projects page detected, initializing...');
+        setTimeout(initializeProjects, 100); // Small delay to ensure everything is loaded
         setupSearchAndFilters();
         setupProjectInteractions();
+    } else {
+        console.log('❌ Not on projects page');
     }
 });
 
 // Инициализация проектов
 async function initializeProjects() {
+    console.log('🔄 Starting project initialization...');
+    
     try {
+        // Check if container exists
+        const container = document.getElementById('projects-container');
+        console.log('📦 Container check:', container ? '✅ Found' : '❌ Not found');
+        
+        if (!container) {
+            console.error('❌ CRITICAL: projects-container not found!');
+            return;
+        }
+        
         console.log('🔄 Loading projects...');
         await loadProjects();
+        
+        console.log('📊 Projects loaded:', projects.length);
         filteredProjects = [...projects];
+        
+        console.log('🎨 Starting render...');
         renderProjects();
+        
+        console.log('📈 Updating count...');
         updateProjectsCount();
-        console.log(`✅ Initialized with ${projects.length} projects`);
+        
+        console.log(`✅ Initialization complete! ${projects.length} projects loaded`);
+        
     } catch (error) {
         console.error('❌ Failed to initialize projects:', error);
-        showNotification('Error loading projects', 'error');
+        showDebugError('Error loading projects: ' + error.message);
+    }
+}
+
+// Show debug error in the container
+function showDebugError(message) {
+    const container = document.getElementById('projects-container');
+    if (container) {
+        container.innerHTML = `
+            <div style="grid-column: 1 / -1; text-align: center; padding: 4rem 2rem; background: var(--card-bg); border-radius: 15px; border: 2px solid #dc3545;">
+                <div style="font-size: 3rem; margin-bottom: 1rem; color: #dc3545;">⚠️</div>
+                <h3 style="color: #dc3545;">Debug Error</h3>
+                <p style="color: var(--text-color); font-family: monospace; background: rgba(220,53,69,0.1); padding: 1rem; border-radius: 8px; margin: 1rem 0;">
+                    ${message}
+                </p>
+                <button onclick="location.reload()" style="background: #dc3545; color: white; border: none; padding: 0.8rem 1.5rem; border-radius: 8px; cursor: pointer;">
+                    Reload Page
+                </button>
+            </div>
+        `;
     }
 }
 
 // Загрузка проектов из различных источников
 async function loadProjects() {
-    console.log('🔍 Checking for saved projects...');
+    console.log('🔍 Starting project loading...');
     
-    // 1. Сначала проверяем localStorage
+    // 1. Check localStorage first
     try {
         const localProjects = localStorage.getItem('nordmaling_projects');
+        console.log('💾 localStorage check:', localProjects ? 'Found data' : 'No data');
+        
         if (localProjects) {
             const parsedProjects = JSON.parse(localProjects);
+            console.log('📝 Parsed projects:', parsedProjects.length, 'items');
+            
             if (Array.isArray(parsedProjects) && parsedProjects.length > 0) {
                 projects = parsedProjects;
                 window.projects = projects;
@@ -55,18 +102,20 @@ async function loadProjects() {
         console.log('⚠️ localStorage loading failed:', error);
     }
 
-    // 2. Если нет сохраненных проектов, используем демо
-    console.log('📝 No saved projects found, loading demo projects...');
+    // 2. Load demo projects
+    console.log('📝 Loading demo projects...');
     projects = getDefaultProjects();
     window.projects = projects;
     
-    // Сохраняем демо-проекты в localStorage для будущих загрузок
+    // Save demo projects to localStorage
     try {
         localStorage.setItem('nordmaling_projects', JSON.stringify(projects));
         console.log('💾 Demo projects saved to localStorage');
     } catch (error) {
         console.error('❌ Failed to save demo projects:', error);
     }
+    
+    console.log(`📊 Final projects count: ${projects.length}`);
 }
 
 // Демо-проекты для показа
@@ -76,8 +125,8 @@ function getDefaultProjects() {
             id: 1,
             name: "Villa Haugen Utendørs",
             category: "exterior",
-            description: "Komplett utendørs maling av villa i Mo i Rana. Inkludert overflatebehandling og to strøk kvalitetsmaling. Prosjektet tok 5 dager å fullføre og kunden var svært fornøyd med resultatet. Brukt værbestandig maling som beskytter mot norske værforhold.",
-            images: ["https://via.placeholder.com/400x300/ff6b35/ffffff?text=Villa+Haugen+Exterior"],
+            description: "Komplett utendørs maling av villa i Mo i Rana. Inkludert overflatebehandling og to strøk kvalitetsmaling. Prosjektet tok 5 dager å fullføre og kunden var svært fornøyd med resultatet.",
+            images: ["https://via.placeholder.com/400x300/ff6b35/ffffff?text=Villa+Haugen"],
             date: "2024-03-15",
             location: "Mo i Rana",
             client: "Familie Haugen",
@@ -88,7 +137,7 @@ function getDefaultProjects() {
             id: 2,
             name: "Leilighet Sentrum Innendørs",
             category: "interior",
-            description: "Innendørs maling av 3-roms leilighet i sentrum av Mosjøen. Alle rom malt med miljøvennlig maling. Spesielt fokus på stue og soverom med moderne fargepalette som skaper en koselig atmosfære.",
+            description: "Innendørs maling av 3-roms leilighet i sentrum av Mosjøen. Alle rom malt med miljøvennlig maling. Moderne fargepalette som skaper koselig atmosfære.",
             images: ["https://via.placeholder.com/400x300/004e89/ffffff?text=Apartment+Interior"],
             date: "2024-02-28",
             location: "Mosjøen",
@@ -100,7 +149,7 @@ function getDefaultProjects() {
             id: 3,
             name: "Takprosjekt Nedre Rana",
             category: "roof-painting",
-            description: "Takmaling og impregnering av enebolig. Komplett renovering av takflater med høykvalitets takbelegg som beskytter mot norske værforhold. Inkludert inspeksjon og reparasjon av mindre skader.",
+            description: "Takmaling og impregnering av enebolig. Komplett renovering av takflater med høykvalitets takbelegg som beskytter mot norske værforhold.",
             images: ["https://via.placeholder.com/400x300/ffd23f/333333?text=Roof+Project"],
             date: "2024-01-20",
             location: "Rana",
@@ -112,7 +161,7 @@ function getDefaultProjects() {
             id: 4,
             name: "Hytte Sandnessjøen Renovering",
             category: "exterior",
-            description: "Fullstendig utvendig renovering av tradisjonell norsk hytte. Inkludert slipearbeid, grunning og to strøk med traditionell rød farge. Restaurering av historiske detaljer og vedlikehold av autentisk utseende.",
+            description: "Fullstendig utvendig renovering av tradisjonell norsk hytte. Inkludert slipearbeid, grunning og to strøk med traditionell rød farge.",
             images: ["https://via.placeholder.com/400x300/dc3545/ffffff?text=Cabin+Renovation"],
             date: "2024-04-10",
             location: "Sandnessjøen", 
@@ -124,7 +173,7 @@ function getDefaultProjects() {
             id: 5,
             name: "Kontor Mosjøen Interiør",
             category: "interior",
-            description: "Moderne interiørmaling av kontorbygg. Brukt nøytrale farger for å skape et profesjonelt og rolig arbeidsmiljø. Inkludert maling av møterom, korridorer og fellesarealer med høy kvalitet.",
+            description: "Moderne interiørmaling av kontorbygg. Brukt nøytrale farger for å skape et profesjonelt og rolig arbeidsmiljø.",
             images: ["https://via.placeholder.com/400x300/17a2b8/ffffff?text=Office+Interior"],
             date: "2024-05-05",
             location: "Mosjøen",
@@ -136,63 +185,96 @@ function getDefaultProjects() {
             id: 6,
             name: "Barnehage Hemnes Fargerikt",
             category: "interior",
-            description: "Fargerik innendørs maling av barnehage. Brukt barnevennlige og allergivennlige malinger i lyse, glade farger. Spesielle tegninger og motiver for å skape et inspirerende miljø for barna.",
+            description: "Fargerik innendørs maling av barnehage. Brukt barnevennlige og allergivennlige malinger i lyse, glade farger.",
             images: ["https://via.placeholder.com/400x300/28a745/ffffff?text=Kindergarten+Colors"],
             date: "2024-06-12",
             location: "Hemnes",
             client: "Hemnes Kommune",
             duration: "8 dager",
             area: "300 m²"
+        },
+        {
+            id: 7,
+            name: "Butikk Mo i Rana Fasade",
+            category: "exterior",
+            description: "Profesjonell fasademaling av forretningsbygg i Mo i Rana sentrum. Moderne fargevalg som tiltrekker kunder.",
+            images: ["https://via.placeholder.com/400x300/6f42c1/ffffff?text=Shop+Facade"],
+            date: "2024-07-22",
+            location: "Mo i Rana",
+            client: "Handel Nord AS",
+            duration: "3 dager",
+            area: "75 m²"
+        },
+        {
+            id: 8,
+            name: "Avfallshåndtering Industriområde",
+            category: "waste",
+            description: "Komplett avfallshåndtering og rydding etter byggprosjekt. Miljøvennlig sortering og gjenvinning av materialer.",
+            images: ["https://via.placeholder.com/400x300/6c757d/ffffff?text=Waste+Management"],
+            date: "2024-08-01",
+            location: "Hemnes",
+            client: "Byggmester Nordland",
+            duration: "2 dager",
+            area: "500 m²"
         }
     ];
 }
 
-// Rендеринг проектов
+// Рендеринг проектов
 function renderProjects() {
-    console.log(`🎨 Rendering ${filteredProjects.length} projects...`);
+    console.log(`🎨 Starting render of ${filteredProjects.length} projects...`);
     
     const projectsContainer = document.getElementById('projects-container');
     if (!projectsContainer) {
-        console.error('❌ Projects container not found!');
+        console.error('❌ CRITICAL: Projects container not found during render!');
         return;
     }
 
+    console.log('📦 Container found, proceeding with render...');
+
     if (filteredProjects.length === 0) {
+        console.log('📝 No projects to show, rendering empty state...');
         projectsContainer.innerHTML = getNoProjectsHTML();
         return;
     }
 
-    const projectsHTML = filteredProjects.map(project => createProjectCard(project)).join('');
+    console.log('🏗️ Creating project cards...');
+    const projectsHTML = filteredProjects.map((project, index) => {
+        console.log(`🎴 Creating card ${index + 1}: ${project.name}`);
+        return createProjectCard(project);
+    }).join('');
+    
+    console.log('📄 Setting innerHTML...');
     projectsContainer.innerHTML = projectsHTML;
 
-    // Применяем переводы к новым элементам
+    console.log('🌍 Applying translations...');
+    // Apply translations to new elements
     if (typeof applyTranslations === 'function' && typeof currentLanguage !== 'undefined') {
         applyTranslations(currentLanguage);
     }
 
-    // Настраиваем ленивую загрузку изображений
+    console.log('🖼️ Setting up lazy loading...');
+    // Setup lazy loading for images
     setupLazyLoading();
     
-    console.log(`✅ Rendered ${filteredProjects.length} projects successfully`);
+    console.log(`✅ Successfully rendered ${filteredProjects.length} projects!`);
 }
 
 // HTML для случая когда нет проектов
 function getNoProjectsHTML() {
     return `
-        <div class="no-projects-message">
-            <div class="no-projects-content">
-                <i class="fas fa-search" style="font-size: 4rem; color: var(--primary-color); margin-bottom: 1rem; opacity: 0.7;"></i>
-                <h3 data-translate="no-projects">Ingen prosjekter funnet</h3>
-                <p style="color: var(--text-color); opacity: 0.8; margin-bottom: 2rem;">
-                    ${currentSearchTerm ? 
-                        `Ingen prosjekter matcher "${currentSearchTerm}"` : 
-                        'Prøv å endre filter eller søkeord'
-                    }
-                </p>
-                <button onclick="clearFilters()" class="clear-filters-btn">
-                    <i class="fas fa-undo"></i> Tilbakestill filter
-                </button>
-            </div>
+        <div style="grid-column: 1 / -1; text-align: center; padding: 4rem 2rem; background: var(--card-bg); border-radius: 15px;">
+            <div style="font-size: 4rem; margin-bottom: 1rem; opacity: 0.7;">🔍</div>
+            <h3 style="color: var(--secondary-color); margin-bottom: 1rem;" data-translate="no-projects">Ingen prosjekter funnet</h3>
+            <p style="color: var(--text-color); opacity: 0.8; margin-bottom: 2rem;">
+                ${currentSearchTerm ? 
+                    `Ingen prosjekter matcher "${currentSearchTerm}"` : 
+                    'Prøv å endre filter eller søkeord'
+                }
+            </p>
+            <button onclick="clearFilters()" style="background: var(--gradient); color: white; border: none; padding: 0.8rem 1.5rem; border-radius: 8px; cursor: pointer; font-weight: bold;">
+                <i class="fas fa-undo"></i> Tilbakestill filter
+            </button>
         </div>
     `;
 }
@@ -215,10 +297,10 @@ function createProjectCard(project) {
                 <div class="project-overlay">
                     <div class="project-actions">
                         <button onclick="openProjectModal(${project.id})" class="project-btn primary">
-                            <i class="fas fa-eye"></i> Se detaljer
+                            <i class="fas fa-eye"></i> <span data-translate="view-details">Se detaljer</span>
                         </button>
                         <button onclick="shareProject(${project.id})" class="project-btn secondary">
-                            <i class="fas fa-share"></i> Del
+                            <i class="fas fa-share"></i> <span data-translate="share">Del</span>
                         </button>
                     </div>
                 </div>
@@ -249,53 +331,37 @@ function createProjectCard(project) {
     `;
 }
 
-// Обновление списка проектов (вызывается из админ-панели)
-function updateProjectsList() {
-    console.log('🔄 Updating projects list from admin panel...');
-    
-    // Перезагружаем проекты из localStorage
-    try {
-        const localProjects = localStorage.getItem('nordmaling_projects');
-        if (localProjects) {
-            projects = JSON.parse(localProjects);
-            window.projects = projects;
-            
-            // Применяем текущие фильтры
-            applyFilters();
-            
-            console.log(`✅ Projects list updated: ${projects.length} total projects`);
-        }
-    } catch (error) {
-        console.error('❌ Error updating projects list:', error);
-    }
-}
-
 // Настройка поиска и фильтров
 function setupSearchAndFilters() {
+    console.log('🔧 Setting up search and filters...');
+    
     const searchInput = document.getElementById('project-search');
     const filterButtons = document.querySelectorAll('.filter-btn');
 
-    // Поиск с debounce
+    console.log('🔍 Search input:', searchInput ? '✅ Found' : '❌ Not found');
+    console.log('🏷️ Filter buttons:', filterButtons.length, 'found');
+
+    // Search with debounce
     if (searchInput) {
         searchInput.addEventListener('input', debounce(function(e) {
             currentSearchTerm = e.target.value.toLowerCase().trim();
-            console.log(`🔍 Search term: "${currentSearchTerm}"`);
+            console.log(`🔍 Search term changed: "${currentSearchTerm}"`);
             applyFilters();
         }, 300));
     }
 
-    // Фильтры категорий
+    // Category filters
     filterButtons.forEach(button => {
         button.addEventListener('click', function() {
             const filter = this.getAttribute('data-filter');
-            console.log(`🏷️ Filter changed to: ${filter}`);
+            console.log(`🏷️ Filter clicked: ${filter}`);
             setActiveFilter(filter);
             currentFilter = filter;
             applyFilters();
         });
     });
     
-    console.log('🔧 Search and filters setup complete');
+    console.log('✅ Search and filters setup complete');
 }
 
 // Применение фильтров
@@ -303,10 +369,10 @@ function applyFilters() {
     console.log(`🔍 Applying filters: category="${currentFilter}", search="${currentSearchTerm}"`);
     
     filteredProjects = projects.filter(project => {
-        // Фильтр по категории
+        // Category filter
         const matchesCategory = currentFilter === 'all' || project.category === currentFilter;
         
-        // Фильтр по поиску
+        // Search filter
         const matchesSearch = !currentSearchTerm || 
             project.name.toLowerCase().includes(currentSearchTerm) ||
             project.description.toLowerCase().includes(currentSearchTerm) ||
@@ -334,93 +400,36 @@ function setActiveFilter(filter) {
     }
 }
 
-// Сброс фильтров
-function clearFilters() {
-    console.log('🔄 Clearing all filters...');
-    
-    currentFilter = 'all';
-    currentSearchTerm = '';
-    
-    const searchInput = document.getElementById('project-search');
-    if (searchInput) {
-        searchInput.value = '';
-    }
-    
-    setActiveFilter('all');
-    filteredProjects = [...projects];
-    renderProjects();
-    updateProjectsCount();
-}
-
 // Обновление счетчика проектов
 function updateProjectsCount() {
     const countElement = document.getElementById('projects-count');
+    console.log('📊 Updating count, element:', countElement ? '✅ Found' : '❌ Not found');
+    
     if (countElement) {
         const total = projects.length;
         const filtered = filteredProjects.length;
         
+        let countText;
         if (currentFilter === 'all' && !currentSearchTerm) {
-            countElement.textContent = `${total} prosjekter`;
+            if (currentLanguage === 'en') {
+                countText = `${total} projects`;
+            } else {
+                countText = `${total} prosjekter`;
+            }
         } else {
-            countElement.textContent = `${filtered} av ${total} prosjekter`;
-        }
-    }
-}
-
-// Добавление нового проекта (используется админ-панелью)
-function addProject(projectData) {
-    console.log('➕ Adding new project:', projectData.name);
-    
-    const newProject = {
-        id: Date.now(),
-        ...projectData,
-        date: projectData.date || new Date().toISOString().split('T')[0]
-    };
-    
-    projects.push(newProject);
-    window.projects = projects; // Обновляем глобальную переменную
-    
-    // Сохраняем в localStorage
-    try {
-        localStorage.setItem('nordmaling_projects', JSON.stringify(projects));
-        console.log('💾 Projects saved to localStorage');
-    } catch (error) {
-        console.error('❌ Error saving projects:', error);
-    }
-    
-    // Обновляем отображение
-    applyFilters();
-    
-    return newProject;
-}
-
-// Удаление проекта (используется админ-панелью)
-function removeProject(projectId) {
-    console.log('🗑️ Removing project:', projectId);
-    
-    const index = projects.findIndex(p => p.id === projectId);
-    if (index !== -1) {
-        const removedProject = projects.splice(index, 1)[0];
-        window.projects = projects; // Обновляем глобальную переменную
-        
-        // Сохраняем в localStorage
-        try {
-            localStorage.setItem('nordmaling_projects', JSON.stringify(projects));
-            console.log('💾 Projects updated in localStorage');
-        } catch (error) {
-            console.error('❌ Error updating projects:', error);
+            if (currentLanguage === 'en') {
+                countText = `${filtered} of ${total} projects`;
+            } else {
+                countText = `${filtered} av ${total} prosjekter`;
+            }
         }
         
-        // Обновляем отображение
-        applyFilters();
-        
-        console.log('✅ Project removed:', removedProject.name);
-        return true;
+        countElement.textContent = countText;
+        console.log('📊 Count updated:', countText);
     }
-    return false;
 }
 
-// Остальные функции остаются теми же...
+// Utility functions
 function getCategoryColor(category) {
     const colors = {
         'exterior': 'ff6b35',
@@ -464,7 +473,11 @@ function formatDate(dateString) {
     const options = { year: 'numeric', month: 'long', day: 'numeric' };
     
     try {
-        return date.toLocaleDateString('no-NO', options);
+        if (currentLanguage === 'en') {
+            return date.toLocaleDateString('en-US', options);
+        } else {
+            return date.toLocaleDateString('no-NO', options);
+        }
     } catch (error) {
         return dateString;
     }
@@ -487,42 +500,46 @@ function debounce(func, wait) {
     };
 }
 
-// Модальное окно и другие функции...
-function openProjectModal(projectId) {
-    const project = projects.find(p => p.id === projectId);
-    if (!project) return;
-
-    console.log('👁️ Opening modal for project:', project.name);
+function clearFilters() {
+    console.log('🔄 Clearing all filters...');
     
-    // Код модального окна остается тем же...
-    // (сохраняю место для краткости)
+    currentFilter = 'all';
+    currentSearchTerm = '';
+    
+    const searchInput = document.getElementById('project-search');
+    if (searchInput) {
+        searchInput.value = '';
+    }
+    
+    setActiveFilter('all');
+    filteredProjects = [...projects];
+    renderProjects();
+    updateProjectsCount();
+}
+
+// Basic implementations for missing functions
+function openProjectModal(projectId) {
+    console.log('👁️ Opening modal for project:', projectId);
+    // Basic modal implementation
+    alert(`Project details for ID: ${projectId}\n\nThis would open a detailed modal window.`);
 }
 
 function shareProject(projectId) {
+    console.log('📤 Sharing project:', projectId);
     const project = projects.find(p => p.id === projectId);
-    if (!project) return;
-
-    const shareData = {
-        title: `${project.name} - Nordmaling AS`,
-        text: `Se dette flotte malerprosjektet: ${project.name} i ${project.location || 'Norge'}`,
-        url: window.location.href
-    };
-
-    if (navigator.share) {
-        navigator.share(shareData).catch(console.error);
-    } else {
-        const shareText = `${shareData.title}\n${shareData.text}\n${shareData.url}`;
-        navigator.clipboard.writeText(shareText).then(() => {
-            showNotification('Prosjektlink kopiert!', 'success');
-        }).catch(() => {
-            showNotification('Kunne ikke kopiere link', 'error');
-        });
+    if (project) {
+        const shareText = `Check out this project: ${project.name} by Nordmaling AS\n${window.location.href}`;
+        if (navigator.clipboard) {
+            navigator.clipboard.writeText(shareText);
+            alert('Project link copied to clipboard!');
+        } else {
+            alert(shareText);
+        }
     }
 }
 
 function setupProjectInteractions() {
     setupLazyLoading();
-    setupScrollAnimations();
     console.log('🎭 Project interactions setup complete');
 }
 
@@ -542,29 +559,66 @@ function setupLazyLoading() {
     images.forEach(img => imageObserver.observe(img));
 }
 
-function setupScrollAnimations() {
-    const projectCards = document.querySelectorAll('.project-card');
+// Export functions for global use
+window.addProject = function(projectData) {
+    const newProject = {
+        id: Date.now(),
+        ...projectData,
+        date: projectData.date || new Date().toISOString().split('T')[0]
+    };
     
-    const cardObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.style.animation = 'fadeInUp 0.6s ease forwards';
-            }
-        });
-    }, {
-        threshold: 0.1,
-        rootMargin: '0px 0px -50px 0px'
-    });
+    projects.push(newProject);
+    window.projects = projects;
+    
+    localStorage.setItem('nordmaling_projects', JSON.stringify(projects));
+    applyFilters();
+    
+    return newProject;
+};
 
-    projectCards.forEach(card => cardObserver.observe(card));
-}
+window.removeProject = function(projectId) {
+    const index = projects.findIndex(p => p.id === projectId);
+    if (index !== -1) {
+        projects.splice(index, 1);
+        window.projects = projects;
+        localStorage.setItem('nordmaling_projects', JSON.stringify(projects));
+        applyFilters();
+        return true;
+    }
+    return false;
+};
 
-// Экспорт функций для использования в других файлах
-window.addProject = addProject;
-window.removeProject = removeProject;
-window.updateProjectsList = updateProjectsList;
+window.updateProjectsList = function() {
+    console.log('🔄 Updating projects list from external call...');
+    const localProjects = localStorage.getItem('nordmaling_projects');
+    if (localProjects) {
+        projects = JSON.parse(localProjects);
+        window.projects = projects;
+        applyFilters();
+    }
+};
+
 window.openProjectModal = openProjectModal;
 window.shareProject = shareProject;
 window.clearFilters = clearFilters;
 
-console.log('🚀 Projects management system fully loaded and ready!');
+console.log('🚀 Projects management system fully loaded with debug support!');
+
+// Debug function for console
+window.debugProjects = function() {
+    console.log('🔍 DEBUG INFO:');
+    console.log('Projects array:', projects);
+    console.log('Filtered projects:', filteredProjects);
+    console.log('Current filter:', currentFilter);
+    console.log('Search term:', currentSearchTerm);
+    console.log('Container:', document.getElementById('projects-container'));
+    console.log('Count element:', document.getElementById('projects-count'));
+    return {
+        projects,
+        filteredProjects,
+        currentFilter,
+        currentSearchTerm,
+        container: document.getElementById('projects-container'),
+        countElement: document.getElementById('projects-count')
+    };
+};
