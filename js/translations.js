@@ -223,6 +223,26 @@ const translations = {
     }
 };
 
+const translations = {
+    no: {
+        // ... existing translations ...
+        'projects-count-single': 'prosjekt',
+        'projects-count-plural': 'prosjekter',
+        'completed-projects': 'Fullførte kvalitetsprosjekter',
+        'view-details': 'Se detaljer',
+        'share': 'Del',
+        // ... rest of translations
+    },
+    en: {
+        // ... existing translations ...
+        'projects-count-single': 'project',
+        'projects-count-plural': 'projects',
+        'completed-projects': 'Completed quality projects',
+        'view-details': 'View details',
+        'share': 'Share',
+        // ... rest of translations
+    }
+};
 // Apply translations function
 function applyTranslations(language) {
     const langData = translations[language];
