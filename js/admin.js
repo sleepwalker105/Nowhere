@@ -1,11 +1,11 @@
-// Админ-панель для управления проектами
+// Admin Panel for Project Management - English Version
 let isAdminMode = false;
 let currentEditingProject = null;
 
-// Проверяем загрузку
+// Check loading
 console.log('Admin panel script loaded! 🔧');
 
-// Инициализация админ-панели
+// Initialize admin panel
 document.addEventListener('DOMContentLoaded', function() {
     if (window.location.pathname.includes('projects.html')) {
         console.log('Projects page detected, setting up admin panel...');
@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
-// Создаем кнопку админки
+// Create admin button
 function createAdminButton() {
     const adminButton = document.createElement('button');
     adminButton.id = 'admin-toggle';
@@ -52,7 +52,7 @@ function createAdminButton() {
     console.log('Admin button created! ⚙️');
 }
 
-// Создаем панель админки
+// Create admin panel
 function createAdminPanel() {
     const adminPanel = document.createElement('div');
     adminPanel.id = 'admin-panel';
@@ -84,69 +84,69 @@ function createAdminPanel() {
             
             <div class="admin-section">
                 <h3 style="color: var(--secondary-color); margin-bottom: 1rem;">
-                    <i class="fas fa-plus-circle"></i> Legg til nytt prosjekt
+                    <i class="fas fa-plus-circle"></i> Add New Project
                 </h3>
                 
                 <form id="admin-project-form" onsubmit="handleProjectSubmit(event)">
                     <div class="form-group" style="margin-bottom: 1rem;">
-                        <label style="display: block; margin-bottom: 0.5rem; font-weight: bold;">Prosjektnavn *</label>
+                        <label style="display: block; margin-bottom: 0.5rem; font-weight: bold;">Project Name *</label>
                         <input type="text" id="project-name" required style="width: 100%; padding: 0.8rem; border: 2px solid var(--border-color); border-radius: 8px; background: var(--card-bg); color: var(--text-color);">
                     </div>
                     
                     <div class="form-group" style="margin-bottom: 1rem;">
-                        <label style="display: block; margin-bottom: 0.5rem; font-weight: bold;">Kategori *</label>
+                        <label style="display: block; margin-bottom: 0.5rem; font-weight: bold;">Category *</label>
                         <select id="project-category" required style="width: 100%; padding: 0.8rem; border: 2px solid var(--border-color); border-radius: 8px; background: var(--card-bg); color: var(--text-color);">
-                            <option value="">Velg kategori</option>
-                            <option value="exterior">Utendørs maling</option>
-                            <option value="interior">Innendørs maling</option>
-                            <option value="roof-painting">Takmaling</option>
-                            <option value="roof-cleaning">Takrensing</option>
-                            <option value="waste">Avfallshåndtering</option>
-                            <option value="other">Annet</option>
+                            <option value="">Select Category</option>
+                            <option value="exterior">Exterior Painting</option>
+                            <option value="interior">Interior Painting</option>
+                            <option value="roof-painting">Roof Painting</option>
+                            <option value="roof-cleaning">Roof Cleaning</option>
+                            <option value="waste">Waste Management</option>
+                            <option value="other">Other</option>
                         </select>
                     </div>
                     
                     <div class="form-group" style="margin-bottom: 1rem;">
-                        <label style="display: block; margin-bottom: 0.5rem; font-weight: bold;">Beskrivelse *</label>
+                        <label style="display: block; margin-bottom: 0.5rem; font-weight: bold;">Description *</label>
                         <textarea id="project-description" required rows="4" style="width: 100%; padding: 0.8rem; border: 2px solid var(--border-color); border-radius: 8px; background: var(--card-bg); color: var(--text-color); resize: vertical;"></textarea>
                     </div>
                     
                     <div class="form-group" style="margin-bottom: 1rem;">
-                        <label style="display: block; margin-bottom: 0.5rem; font-weight: bold;">Lokasjon</label>
-                        <input type="text" id="project-location" placeholder="f.eks. Mo i Rana" style="width: 100%; padding: 0.8rem; border: 2px solid var(--border-color); border-radius: 8px; background: var(--card-bg); color: var(--text-color);">
+                        <label style="display: block; margin-bottom: 0.5rem; font-weight: bold;">Location</label>
+                        <input type="text" id="project-location" placeholder="e.g. Mo i Rana" style="width: 100%; padding: 0.8rem; border: 2px solid var(--border-color); border-radius: 8px; background: var(--card-bg); color: var(--text-color);">
                     </div>
                     
                     <div class="form-row" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
                         <div class="form-group">
-                            <label style="display: block; margin-bottom: 0.5rem; font-weight: bold;">Varighet</label>
-                            <input type="text" id="project-duration" placeholder="f.eks. 5 dager" style="width: 100%; padding: 0.8rem; border: 2px solid var(--border-color); border-radius: 8px; background: var(--card-bg); color: var(--text-color);">
+                            <label style="display: block; margin-bottom: 0.5rem; font-weight: bold;">Duration</label>
+                            <input type="text" id="project-duration" placeholder="e.g. 5 days" style="width: 100%; padding: 0.8rem; border: 2px solid var(--border-color); border-radius: 8px; background: var(--card-bg); color: var(--text-color);">
                         </div>
                         <div class="form-group">
-                            <label style="display: block; margin-bottom: 0.5rem; font-weight: bold;">Område</label>
-                            <input type="text" id="project-area" placeholder="f.eks. 180 m²" style="width: 100%; padding: 0.8rem; border: 2px solid var(--border-color); border-radius: 8px; background: var(--card-bg); color: var(--text-color);">
+                            <label style="display: block; margin-bottom: 0.5rem; font-weight: bold;">Area</label>
+                            <input type="text" id="project-area" placeholder="e.g. 180 m²" style="width: 100%; padding: 0.8rem; border: 2px solid var(--border-color); border-radius: 8px; background: var(--card-bg); color: var(--text-color);">
                         </div>
                     </div>
                     
                     <div class="form-group" style="margin-bottom: 1rem;">
-                        <label style="display: block; margin-bottom: 0.5rem; font-weight: bold;">Klient</label>
-                        <input type="text" id="project-client" placeholder="f.eks. Familie Hansen" style="width: 100%; padding: 0.8rem; border: 2px solid var(--border-color); border-radius: 8px; background: var(--card-bg); color: var(--text-color);">
+                        <label style="display: block; margin-bottom: 0.5rem; font-weight: bold;">Client</label>
+                        <input type="text" id="project-client" placeholder="e.g. Hansen Family" style="width: 100%; padding: 0.8rem; border: 2px solid var(--border-color); border-radius: 8px; background: var(--card-bg); color: var(--text-color);">
                     </div>
                     
                     <div class="form-group" style="margin-bottom: 1.5rem;">
-                        <label style="display: block; margin-bottom: 0.5rem; font-weight: bold;">Bilder</label>
+                        <label style="display: block; margin-bottom: 0.5rem; font-weight: bold;">Images</label>
                         <input type="file" id="project-images" multiple accept="image/*" style="width: 100%; padding: 0.8rem; border: 2px solid var(--border-color); border-radius: 8px; background: var(--card-bg); color: var(--text-color);">
-                        <small style="color: var(--text-color); opacity: 0.7;">Du kan velge flere bilder</small>
+                        <small style="color: var(--text-color); opacity: 0.7;">You can select multiple images</small>
                     </div>
                     
                     <button type="submit" style="width: 100%; padding: 1rem; background: var(--gradient); color: white; border: none; border-radius: 10px; font-weight: bold; cursor: pointer; font-size: 1rem;">
-                        <i class="fas fa-plus"></i> Legg til prosjekt
+                        <i class="fas fa-plus"></i> Add Project
                     </button>
                 </form>
             </div>
             
             <div class="admin-section" style="margin-top: 2rem; padding-top: 2rem; border-top: 2px solid var(--border-color);">
                 <h3 style="color: var(--secondary-color); margin-bottom: 1rem;">
-                    <i class="fas fa-list"></i> Eksisterende prosjekter
+                    <i class="fas fa-list"></i> Existing Projects
                 </h3>
                 <div id="admin-projects-list" style="max-height: 300px; overflow-y: auto;">
                     <!-- Projects list will be populated here -->
@@ -155,14 +155,27 @@ function createAdminPanel() {
             
             <div class="admin-section" style="margin-top: 2rem; padding-top: 2rem; border-top: 2px solid var(--border-color);">
                 <h3 style="color: var(--secondary-color); margin-bottom: 1rem;">
-                    <i class="fas fa-tools"></i> Verktøy
+                    <i class="fas fa-tools"></i> Tools
                 </h3>
                 <button onclick="clearAllProjects()" style="width: 100%; padding: 0.8rem; background: #dc3545; color: white; border: none; border-radius: 8px; cursor: pointer; margin-bottom: 0.5rem;">
-                    <i class="fas fa-trash"></i> Slett alle prosjekter
+                    <i class="fas fa-trash"></i> Delete All Projects
                 </button>
-                <button onclick="exportProjects()" style="width: 100%; padding: 0.8rem; background: var(--secondary-color); color: white; border: none; border-radius: 8px; cursor: pointer;">
-                    <i class="fas fa-download"></i> Eksporter prosjekter
+                <button onclick="exportProjects()" style="width: 100%; padding: 0.8rem; background: var(--secondary-color); color: white; border: none; border-radius: 8px; cursor: pointer; margin-bottom: 0.5rem;">
+                    <i class="fas fa-download"></i> Export Projects
                 </button>
+                <button onclick="importProjects()" style="width: 100%; padding: 0.8rem; background: var(--accent-color); color: white; border: none; border-radius: 8px; cursor: pointer;">
+                    <i class="fas fa-upload"></i> Import Projects
+                </button>
+                <input type="file" id="import-file" accept=".json" style="display: none;" onchange="handleImportFile(this)">
+            </div>
+            
+            <div class="admin-section" style="margin-top: 2rem; padding-top: 2rem; border-top: 2px solid var(--border-color);">
+                <h3 style="color: var(--secondary-color); margin-bottom: 1rem;">
+                    <i class="fas fa-info-circle"></i> Statistics
+                </h3>
+                <div id="admin-stats" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                    <!-- Stats will be populated here -->
+                </div>
             </div>
         </div>
     `;
@@ -171,7 +184,7 @@ function createAdminPanel() {
     console.log('Admin panel created! 📋');
 }
 
-// Переключение админ-панели
+// Toggle admin panel
 function toggleAdminPanel() {
     const panel = document.getElementById('admin-panel');
     if (!panel) {
@@ -184,6 +197,7 @@ function toggleAdminPanel() {
     if (isAdminMode) {
         panel.style.right = '0';
         updateAdminProjectsList();
+        updateAdminStats();
         console.log('Admin panel opened! 🔓');
     } else {
         panel.style.right = '-100%';
@@ -191,7 +205,7 @@ function toggleAdminPanel() {
     }
 }
 
-// Закрытие админ-панели
+// Close admin panel
 function closeAdminPanel() {
     const panel = document.getElementById('admin-panel');
     if (panel) {
@@ -200,7 +214,7 @@ function closeAdminPanel() {
     }
 }
 
-// Обработка отправки формы
+// Handle form submission
 function handleProjectSubmit(event) {
     event.preventDefault();
     
@@ -215,83 +229,84 @@ function handleProjectSubmit(event) {
         date: new Date().toISOString().split('T')[0]
     };
     
-    // Валидация
+    // Validation
     if (!formData.name || !formData.category || !formData.description) {
-        showNotification('Fyll ut alle obligatoriske felt!', 'error');
+        showNotification('Please fill in all required fields!', 'error');
         return;
     }
     
     const imageFiles = document.getElementById('project-images').files;
     
-    // Сохраняем проект
+    // Save project
     saveProject(formData, imageFiles);
 }
 
-// Сохранение проекта (обновленная версия)
+// Save project (updated version)
 async function saveProject(projectData, imageFiles) {
     try {
-        showLoadingOverlay('Legger til prosjekt...');
+        showLoadingOverlay('Adding project...');
         
         const imageUrls = [];
         
-        // Обрабатываем изображения
+        // Process images
         for (let i = 0; i < imageFiles.length; i++) {
             const file = imageFiles[i];
             
-            // Создаем локальную ссылку на изображение
+            // Create local image URL
             const localUrl = URL.createObjectURL(file);
             imageUrls.push(localUrl);
             
-            updateLoadingProgress(`Behandler bilde ${i + 1} av ${imageFiles.length}...`, 
+            updateLoadingProgress(`Processing image ${i + 1} of ${imageFiles.length}...`, 
                                 ((i + 1) / imageFiles.length) * 80);
         }
         
-        // Создаем проект
+        // Create project
         const newProject = {
             id: Date.now(),
             ...projectData,
             images: imageUrls
         };
         
-        updateLoadingProgress('Lagrer prosjekt...', 90);
+        updateLoadingProgress('Saving project...', 90);
         
-        // Добавляем к списку проектов
+        // Add to projects list
         if (typeof projects !== 'undefined') {
             projects.push(newProject);
         } else {
             window.projects = [newProject];
         }
         
-        // Сохраняем в localStorage
+        // Save to localStorage
         localStorage.setItem('nordmaling_projects', JSON.stringify(projects));
         
-        updateLoadingProgress('Ferdig!', 100);
+        updateLoadingProgress('Done!', 100);
         
         setTimeout(() => {
             hideLoadingOverlay();
             
-            // Обновляем отображение
+            // Update display
             if (typeof renderProjects === 'function') {
                 renderProjects();
             }
             
-            // Очищаем форму
+            // Clear form
             document.getElementById('admin-project-form').reset();
             
-            // Обновляем список в админке
+            // Update admin list
             updateAdminProjectsList();
+            updateAdminStats();
             
-            showNotification('Prosjekt lagt til!', 'success');
+            showNotification('Project added successfully!', 'success');
         }, 1000);
         
     } catch (error) {
         console.error('Save project error:', error);
         hideLoadingOverlay();
-        showNotification('Feil ved lagring av prosjekt!', 'error');
+        showNotification('Error saving project!', 'error');
     }
 }
 
-// Обновление списка проектов в админке
+// Update projects list in admin panel
 function updateAdminProjectsList() {
     const listContainer = document.getElementById('admin-projects-list');
     if (!listContainer) return;
@@ -299,28 +314,106 @@ function updateAdminProjectsList() {
     const currentProjects = typeof projects !== 'undefined' ? projects : [];
     
     if (currentProjects.length === 0) {
-        listContainer.innerHTML = '<p style="text-align: center; color: var(--text-color); opacity: 0.7;">Ingen prosjekter ennå</p>';
+        listContainer.innerHTML = '<p style="text-align: center; color: var(--text-color); opacity: 0.7;">No projects yet</p>';
         return;
     }
     
     listContainer.innerHTML = currentProjects.map(project => `
         <div style="background: var(--card-bg); padding: 1rem; border-radius: 8px; margin-bottom: 1rem; border-left: 4px solid var(--primary-color);">
-            <div style="display: flex; justify-content: between; align-items: start;">
+            <div style="display: flex; justify-content: space-between; align-items: start;">
                 <div style="flex: 1;">
                     <h4 style="margin: 0 0 0.5rem 0; color: var(--secondary-color);">${project.name}</h4>
-                    <p style="margin: 0; font-size: 0.9rem; color: var(--text-color); opacity: 0.8;">${project.category} • ${project.location || 'Ukjent lokasjon'}</p>
+                    <p style="margin: 0; font-size: 0.9rem; color: var(--text-color); opacity: 0.8;">${getCategoryDisplayName(project.category)} • ${project.location || 'Unknown location'}</p>
+                    <p style="margin: 0.5rem 0 0 0; font-size: 0.8rem; color: var(--text-color); opacity: 0.6;">
+                        <i class="fas fa-calendar"></i> ${formatDate(project.date)}
+                    </p>
                 </div>
-                <button onclick="deleteProject(${project.id})" style="background: #dc3545; color: white; border: none; padding: 0.3rem 0.6rem; border-radius: 4px; cursor: pointer; font-size: 0.8rem;">
-                    <i class="fas fa-trash"></i>
-                </button>
+                <div style="display: flex; gap: 0.5rem;">
+                    <button onclick="editProject(${project.id})" style="background: var(--secondary-color); color: white; border: none; padding: 0.3rem 0.6rem; border-radius: 4px; cursor: pointer; font-size: 0.8rem;">
+                        <i class="fas fa-edit"></i>
+                    </button>
+                    <button onclick="deleteProject(${project.id})" style="background: #dc3545; color: white; border: none; padding: 0.3rem 0.6rem; border-radius: 4px; cursor: pointer; font-size: 0.8rem;">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </div>
             </div>
         </div>
     `).join('');
 }
 
-// Удаление проекта
+// Update admin statistics
+function updateAdminStats() {
+    const statsContainer = document.getElementById('admin-stats');
+    if (!statsContainer) return;
+    
+    const currentProjects = typeof projects !== 'undefined' ? projects : [];
+    
+    // Calculate stats
+    const totalProjects = currentProjects.length;
+    const categories = {};
+    currentProjects.forEach(project => {
+        categories[project.category] = (categories[project.category] || 0) + 1;
+    });
+    
+    const mostCommonCategory = Object.keys(categories).reduce((a, b) => 
+        categories[a] > categories[b] ? a : b, 'none');
+    
+    const recentProjects = currentProjects.filter(project => {
+        const projectDate = new Date(project.date);
+        const monthAgo = new Date();
+        monthAgo.setMonth(monthAgo.getMonth() - 1);
+        return projectDate > monthAgo;
+    }).length;
+    
+    statsContainer.innerHTML = `
+        <div style="background: var(--card-bg); padding: 1rem; border-radius: 8px; text-align: center;">
+            <div style="font-size: 1.5rem; font-weight: bold; color: var(--primary-color);">${totalProjects}</div>
+            <div style="font-size: 0.9rem; color: var(--text-color);">Total Projects</div>
+        </div>
+        <div style="background: var(--card-bg); padding: 1rem; border-radius: 8px; text-align: center;">
+            <div style="font-size: 1.5rem; font-weight: bold; color: var(--secondary-color);">${recentProjects}</div>
+            <div style="font-size: 0.9rem; color: var(--text-color);">This Month</div>
+        </div>
+        <div style="background: var(--card-bg); padding: 1rem; border-radius: 8px; text-align: center; grid-column: 1 / -1;">
+            <div style="font-size: 1rem; font-weight: bold; color: var(--accent-color);">${getCategoryDisplayName(mostCommonCategory)}</div>
+            <div style="font-size: 0.9rem; color: var(--text-color);">Most Common Category</div>
+        </div>
+    `;
+}
+
+// Edit project
+function editProject(projectId) {
+    const project = projects.find(p => p.id === projectId);
+    if (!project) return;
+    
+    // Fill form with project data
+    document.getElementById('project-name').value = project.name || '';
+    document.getElementById('project-category').value = project.category || '';
+    document.getElementById('project-description').value = project.description || '';
+    document.getElementById('project-location').value = project.location || '';
+    document.getElementById('project-duration').value = project.duration || '';
+    document.getElementById('project-area').value = project.area || '';
+    document.getElementById('project-client').value = project.client || '';
+    
+    // Store current editing project
+    currentEditingProject = projectId;
+    
+    // Update submit button
+    const submitBtn = document.querySelector('#admin-project-form button[type="submit"]');
+    if (submitBtn) {
+        submitBtn.innerHTML = '<i class="fas fa-save"></i> Update Project';
+        submitBtn.style.background = 'var(--secondary-color)';
+    }
+    
+    showNotification('Project loaded for editing', 'info');
+    
+    // Scroll to form
+    document.getElementById('project-name').scrollIntoView({ behavior: 'smooth' });
+}
+
+// Delete project
 function deleteProject(projectId) {
-    if (!confirm('Er du sikker på at du vil slette dette prosjektet?')) return;
+    if (!confirm('Are you sure you want to delete this project?')) return;
     
     if (typeof projects !== 'undefined') {
         projects = projects.filter(p => p.id !== projectId);
@@ -330,14 +423,15 @@ function deleteProject(projectId) {
             renderProjects();
         }
         updateAdminProjectsList();
+        updateAdminStats();
         
-        showNotification('Prosjekt slettet!', 'success');
+        showNotification('Project deleted!', 'success');
     }
 }
 
-// Очистка всех проектов
+// Clear all projects
 function clearAllProjects() {
-    if (!confirm('Er du sikker på at du vil slette ALLE prosjekter? Dette kan ikke angres!')) return;
+    if (!confirm('Are you sure you want to delete ALL projects? This cannot be undone!')) return;
     
     if (typeof projects !== 'undefined') {
         projects.length = 0;
@@ -351,16 +445,17 @@ function clearAllProjects() {
         renderProjects();
     }
     updateAdminProjectsList();
+    updateAdminStats();
     
-    showNotification('Alle prosjekter slettet!', 'success');
+    showNotification('All projects deleted!', 'success');
 }
 
-// Экспорт проектов
+// Export projects
 function exportProjects() {
     const currentProjects = typeof projects !== 'undefined' ? projects : [];
     
     if (currentProjects.length === 0) {
-        showNotification('Ingen prosjekter å eksportere!', 'warning');
+        showNotification('No projects to export!', 'warning');
         return;
     }
     
@@ -372,26 +467,117 @@ function exportProjects() {
     link.download = `nordmaling-projects-${new Date().toISOString().split('T')[0]}.json`;
     link.click();
     
-    showNotification('Prosjekter eksportert!', 'success');
+    showNotification('Projects exported!', 'success');
 }
 
-// Клавиатурные сокращения
+// Import projects
+function importProjects() {
+    document.getElementById('import-file').click();
+}
+
+// Handle import file
+function handleImportFile(input) {
+    const file = input.files[0];
+    if (!file) return;
+    
+    const reader = new FileReader();
+    reader.onload = function(e) {
+        try {
+            const importedProjects = JSON.parse(e.target.result);
+            
+            if (!Array.isArray(importedProjects)) {
+                throw new Error('Invalid file format');
+            }
+            
+            // Validate projects structure
+            const isValid = importedProjects.every(project => 
+                project.name && project.category && project.description
+            );
+            
+            if (!isValid) {
+                throw new Error('Invalid project data structure');
+            }
+            
+            // Merge with existing projects
+            if (typeof projects !== 'undefined') {
+                // Add unique IDs to prevent conflicts
+                importedProjects.forEach(project => {
+                    project.id = Date.now() + Math.random();
+                });
+                
+                projects.push(...importedProjects);
+            } else {
+                window.projects = importedProjects;
+            }
+            
+            // Save to localStorage
+            localStorage.setItem('nordmaling_projects', JSON.stringify(projects));
+            
+            // Update display
+            if (typeof renderProjects === 'function') {
+                renderProjects();
+            }
+            updateAdminProjectsList();
+            updateAdminStats();
+            
+            showNotification(`${importedProjects.length} projects imported successfully!`, 'success');
+            
+        } catch (error) {
+            console.error('Import error:', error);
+            showNotification('Error importing projects. Please check file format.', 'error');
+        }
+    };
+    
+    reader.readAsText(file);
+    
+    // Clear input
+    input.value = '';
+}
+
+// Get category display name
+function getCategoryDisplayName(category) {
+    const names = {
+        'exterior': 'Exterior Painting',
+        'interior': 'Interior Painting',
+        'roof-painting': 'Roof Painting',
+        'roof-cleaning': 'Roof Cleaning',
+        'waste': 'Waste Management',
+        'other': 'Other'
+    };
+    return names[category] || 'Other';
+}
+
+// Format date
+function formatDate(dateString) {
+    if (!dateString) return 'Unknown date';
+    
+    const date = new Date(dateString);
+    const options = { year: 'numeric', month: 'short', day: 'numeric' };
+    
+    try {
+        return date.toLocaleDateString('en-US', options);
+    } catch (error) {
+        return dateString;
+    }
+}
+
+// Keyboard shortcuts
 function setupAdminKeyboardShortcut() {
     document.addEventListener('keydown', function(e) {
-        // Ctrl + Shift + A для открытия админки
+        // Ctrl + Shift + A to open admin panel
         if (e.ctrlKey && e.shiftKey && e.key === 'A') {
             e.preventDefault();
             toggleAdminPanel();
         }
         
-        // Escape для закрытия админки
+        // Escape to close admin panel
         if (e.key === 'Escape' && isAdminMode) {
             closeAdminPanel();
         }
     });
 }
 
-// Утилиты для загрузки
+// Loading utilities
 function showLoadingOverlay(message, progress = 0) {
     let overlay = document.getElementById('upload-overlay');
     
@@ -442,7 +628,7 @@ function hideLoadingOverlay() {
     if (overlay) overlay.remove();
 }
 
-// Добавляем стили для spinner
+// Add spinner styles
 const adminStyles = document.createElement('style');
 adminStyles.textContent = `
     .loading-spinner {
@@ -458,15 +644,53 @@ adminStyles.textContent = `
     @keyframes spin {
         to { transform: rotate(360deg); }
     }
+
+    #admin-panel::-webkit-scrollbar {
+        width: 8px;
+    }
+
+    #admin-panel::-webkit-scrollbar-track {
+        background: var(--bg-color);
+    }
+
+    #admin-panel::-webkit-scrollbar-thumb {
+        background: var(--primary-color);
+        border-radius: 4px;
+    }
+
+    #admin-panel::-webkit-scrollbar-thumb:hover {
+        background: var(--secondary-color);
+    }
+
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+        border-color: var(--primary-color);
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.1);
+    }
+
+    .admin-section {
+        margin-bottom: 1rem;
+    }
+
+    .admin-section h3 {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
 `;
 document.head.appendChild(adminStyles);
 
-// Экспортируем функции
+// Export functions
 window.toggleAdminPanel = toggleAdminPanel;
 window.closeAdminPanel = closeAdminPanel;
 window.handleProjectSubmit = handleProjectSubmit;
+window.editProject = editProject;
 window.deleteProject = deleteProject;
 window.clearAllProjects = clearAllProjects;
 window.exportProjects = exportProjects;
+window.importProjects = importProjects;
+window.handleImportFile = handleImportFile;
 
-console.log('Admin panel fully loaded! Ready to manage projects! 🚀');
+console.log('English Admin panel fully loaded! Ready to manage projects! 🚀');
