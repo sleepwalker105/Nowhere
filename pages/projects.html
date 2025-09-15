@@ -599,27 +599,40 @@
             }
         }
         
-        function initProjects() {
-            console.log('🔄 Initializing projects...');
-            
-            // Load projects from localStorage or use demo
-            const saved = localStorage.getItem('nordmaling_projects');
-            if (saved) {
-                try {
-                    projects = JSON.parse(saved);
-                    console.log('📂 Loaded from localStorage:', projects.length);
-                } catch (e) {
-                    console.log('⚠️ localStorage error, using demo');
-                    projects = [...demoProjects];
-                }
-            } else {
-                console.log('📝 Using demo projects');
-                projects = [...demoProjects];
-                localStorage.setItem('nordmaling_projects', JSON.stringify(projects));
-            }
-            
-            filteredProjects = [...projects];
-            window.projects = projects;
+function initProjects() {
+    console.log('🔄 Initializing projects...');
+    
+    // Load projects from localStorage or use demo
+    const saved = localStorage.getItem('nordmaling_projects');
+    if (saved) {
+        try {
+            projects = JSON.parse(saved);
+            console.log('📂 Loaded from localStorage:', projects.length);
+        } catch (e) {
+            console.log('⚠️ localStorage error, using demo');
+            projects = [...demoProjects];
+        }
+    } else {
+        console.log('📝 Using demo projects');
+        projects = [...demoProjects];
+        localStorage.setItem('nordmaling_projects', JSON.stringify(projects));
+    }
+    
+    filteredProjects = [...projects];
+    window.projects = projects;
+    
+    // Setup interactions
+    setupFilters();
+    setupSearch();
+    
+    // Render
+    renderProjects();
+    
+    console.log('✅ Projects initialized!');
+}
+
+// Make initProjects available globally for admin panel
+window.initProjects = initProjects;
             
             // Setup interactions
             setupFilters();
