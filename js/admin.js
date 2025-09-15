@@ -327,6 +327,11 @@ async function saveProject(projectData, imageFiles) {
         
         const imageUrls = [];
         
+        // Update main projects display
+if (typeof updateProjectsList === 'function') {
+    updateProjectsList();
+}
+        
         // Process images
         for (let i = 0; i < imageFiles.length; i++) {
             const file = imageFiles[i];
