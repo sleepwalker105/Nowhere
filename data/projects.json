@@ -1,0 +1,255 @@
+{
+  "projects": [
+    {
+      "id": 1,
+      "name": "Villa Haugen Utendørs",
+      "category": "exterior",
+      "description": "Komplett utendørs maling av villa i Mo i Rana. Inkludert overflatebehandling og to strøk kvalitetsmaling. Prosjektet tok 5 dager å fullføre og kunden var svært fornøyd med resultatet. Vi brukte værbestandig maling som tåler norske værforhold.",
+      "images": ["villa-haugen-1.jpg", "villa-haugen-2.jpg", "villa-haugen-3.jpg"],
+      "date": "2024-03-15",
+      "location": "Mo i Rana",
+      "client": "Familie Haugen",
+      "duration": "5 dager",
+      "area": "180 m²",
+      "status": "completed",
+      "featured": true,
+      "materials": ["Jotun Demidekk", "Grunning", "Pensler og ruller"],
+      "tags": ["villa", "utendørs", "mo i rana", "privat"]
+    },
+    {
+      "id": 2,
+      "name": "Leilighet Sentrum Innendørs",
+      "category": "interior",
+      "description": "Innendørs maling av 3-roms leilighet i sentrum av Mosjøen. Alle rom malt med miljøvennlig maling. Spesielt fokus på stue og soverom med dekorative teknikker og moderne fargevalg.",
+      "images": ["leilighet-sentrum-1.jpg", "leilighet-sentrum-2.jpg"],
+      "date": "2024-02-28",
+      "location": "Mosjøen",
+      "client": "Privat leietaker",
+      "duration": "3 dager",
+      "area": "85 m²",
+      "status": "completed",
+      "featured": false,
+      "materials": ["Jotun Lady", "Miljøvennlig maling", "Strukturruller"],
+      "tags": ["leilighet", "innendørs", "mosjøen", "miljøvennlig"]
+    },
+    {
+      "id": 3,
+      "name": "Takprosjekt Nedre Rana",
+      "category": "roof-painting",
+      "description": "Takmaling og impregnering av enebolig. Komplett renovering av takflater med høykvalitets takbelegg som beskytter mot norske værforhold. Inkludert inspeksjon og mindre reparasjoner.",
+      "images": ["tak-nedre-rana-1.jpg", "tak-nedre-rana-2.jpg"],
+      "date": "2024-01-20",
+      "location": "Rana",
+      "client": "Eiendomsselskap Nord AS",
+      "duration": "7 dager",
+      "area": "120 m²",
+      "status": "completed",
+      "featured": true,
+      "materials": ["Takbelegg", "Impregnering", "Reparasjonsmateriale"],
+      "tags": ["tak", "enebolig", "rana", "eiendomsselskap"]
+    },
+    {
+      "id": 4,
+      "name": "Hytte Sandnessjøen Renovering",
+      "category": "exterior",
+      "description": "Fullstendig utvendig renovering av tradisjonell norsk hytte. Inkludert slipearbeid, grunning og to strøk med traditionell rød farge. Spesiell behandling av treverk for å bevare autentisk utseende.",
+      "images": ["hytte-sandnessjoen-1.jpg", "hytte-sandnessjoen-2.jpg", "hytte-sandnessjoen-3.jpg"],
+      "date": "2024-04-10",
+      "location": "Sandnessjøen",
+      "client": "Familie Olsen",
+      "duration": "6 dager",
+      "area": "95 m²",
+      "status": "completed",
+      "featured": true,
+      "materials": ["Traditionell rød maling", "Treverk behandling", "Slipeutstyr"],
+      "tags": ["hytte", "tradisjonell", "sandnessjøen", "renovering"]
+    },
+    {
+      "id": 5,
+      "name": "Kontor Mosjøen Interiør",
+      "category": "interior",
+      "description": "Moderne interiørmaling av kontorbygg. Brukt nøytrale farger for å skape et profesjonelt og rolig arbeidsmiljø. Inkludert møterom, kontorer og fellesarealer.",
+      "images": ["kontor-mosjoen-1.jpg", "kontor-mosjoen-2.jpg"],
+      "date": "2024-05-05",
+      "location": "Mosjøen",
+      "client": "Nordland Consulting AS",
+      "duration": "4 dager",
+      "area": "200 m²",
+      "status": "completed",
+      "featured": false,
+      "materials": ["Profesjonell kontormaling", "Nøytrale farger", "Hurtigtørkende maling"],
+      "tags": ["kontor", "bedrift", "mosjøen", "profesjonell"]
+    },
+    {
+      "id": 6,
+      "name": "Barnehage Hemnes Fargerikt",
+      "category": "interior",
+      "description": "Fargerik innendørs maling av barnehage. Brukt barnevennlige og allergivennlige malinger i lyse, glade farger. Spesielle motiver og dekorasjoner i lekeområdene.",
+      "images": ["barnehage-hemnes-1.jpg", "barnehage-hemnes-2.jpg"],
+      "date": "2024-06-12",
+      "location": "Hemnes",
+      "client": "Hemnes Kommune",
+      "duration": "8 dager",
+      "area": "300 m²",
+      "status": "completed",
+      "featured": true,
+      "materials": ["Barnevennlig maling", "Allergivennlig materiale", "Dekorative elementer"],
+      "tags": ["barnehage", "kommune", "hemnes", "barnevennlig"]
+    },
+    {
+      "id": 7,
+      "name": "Garasje Brønnøysund Beskyttelse",
+      "category": "exterior",
+      "description": "Utendørs maling av stor garasje og verksted. Fokus på beskyttelse mot salt og fuktighet fra sjøen. Brukt spesialbehandling for metalliske overflater.",
+      "images": ["garasje-bronnoysund-1.jpg"],
+      "date": "2024-07-18",
+      "location": "Brønnøysund",
+      "client": "Brønnøysund Bilservice",
+      "duration": "3 dager",
+      "area": "150 m²",
+      "status": "completed",
+      "featured": false,
+      "materials": ["Saltbestandig maling", "Metallbehandling", "Antirust primer"],
+      "tags": ["garasje", "verksted", "brønnøysund", "beskyttelse"]
+    },
+    {
+      "id": 8,
+      "name": "Takrengjøring Nesna Omfattende",
+      "category": "roof-cleaning",
+      "description": "Omfattende takrengjøring av flere boliger i Nesna. Fjerning av mose, alger og oppsamlet skitt. Forebyggende behandling for å forhindre ny vekst.",
+      "images": ["takrengjoring-nesna-1.jpg", "takrengjoring-nesna-2.jpg"],
+      "date": "2024-08-22",
+      "location": "Nesna",
+      "client": "Borettslag Nesna",
+      "duration": "10 dager",
+      "area": "450 m²",
+      "status": "completed",
+      "featured": false,
+      "materials": ["Høytrykksspyler", "Miljøvennlig rengjøringsmiddel", "Forebyggende behandling"],
+      "tags": ["takrengjøring", "borettslag", "nesna", "forebyggende"]
+    },
+    {
+      "id": 9,
+      "name": "Restaurant Mo i Rana Oppussing",
+      "category": "interior",
+      "description": "Komplett innvendig oppussing av restaurant. Moderne design med varme farger for å skape en hyggelig atmosfære. Spesialbehandling av kjøkkenområder.",
+      "images": ["restaurant-mo-1.jpg", "restaurant-mo-2.jpg", "restaurant-mo-3.jpg"],
+      "date": "2024-09-10",
+      "location": "Mo i Rana",
+      "client": "Nordlys Restaurant",
+      "duration": "12 dager",
+      "area": "250 m²",
+      "status": "completed",
+      "featured": true,
+      "materials": ["Kjøkkenvennlig maling", "Dekorative teknikker", "Høykvalitets finish"],
+      "tags": ["restaurant", "oppussing", "mo i rana", "kjøkken"]
+    },
+    {
+      "id": 10,
+      "name": "Avfallshåndtering Storprosjekt",
+      "category": "waste",
+      "description": "Omfattende avfallshåndtering etter stort renoveringsprosjekt. Miljøvennlig sortering og deponering av bygningsavfall og malerester fra flere prosjekter.",
+      "images": ["avfall-storprosjekt-1.jpg"],
+      "date": "2024-09-14",
+      "location": "Helgeland region",
+      "client": "Flere kunder",
+      "duration": "2 dager",
+      "area": "N/A",
+      "status": "completed",
+      "featured": false,
+      "materials": ["Containere", "Sorteringsutstyr", "Transport"],
+      "tags": ["avfall", "miljøvennlig", "helgeland", "storprosjekt"]
+    }
+  ],
+  "categories": {
+    "exterior": {
+      "name_no": "Utendørs maling",
+      "name_en": "Exterior Painting",
+      "icon": "fas fa-home",
+      "color": "#ff6b35"
+    },
+    "interior": {
+      "name_no": "Innendørs maling",
+      "name_en": "Interior Painting", 
+      "icon": "fas fa-paint-brush",
+      "color": "#004e89"
+    },
+    "roof-painting": {
+      "name_no": "Takmaling",
+      "name_en": "Roof Painting",
+      "icon": "fas fa-warehouse",
+      "color": "#ffd23f"
+    },
+    "roof-cleaning": {
+      "name_no": "Takrensing",
+      "name_en": "Roof Cleaning",
+      "icon": "fas fa-broom",
+      "color": "#28a745"
+    },
+    "waste": {
+      "name_no": "Avfallshåndtering",
+      "name_en": "Waste Management",
+      "icon": "fas fa-trash",
+      "color": "#6c757d"
+    },
+    "other": {
+      "name_no": "Annet",
+      "name_en": "Other",
+      "icon": "fas fa-tools",
+      "color": "#17a2b8"
+    }
+  },
+  "locations": [
+    "Mo i Rana",
+    "Mosjøen", 
+    "Sandnessjøen",
+    "Brønnøysund",
+    "Hemnes",
+    "Nesna",
+    "Rana",
+    "Vefsn",
+    "Grane",
+    "Hattfjelldal",
+    "Alstahaug"
+  ],
+  "statistics": {
+    "total_projects": 10,
+    "total_area_painted": 1680,
+    "years_experience": 15,
+    "satisfied_customers": 95,
+    "average_rating": 4.8,
+    "completion_rate": 100
+  },
+  "testimonials": [
+    {
+      "client": "Familie Haugen",
+      "project": "Villa Haugen Utendørs",
+      "rating": 5,
+      "comment_no": "Fantastisk arbeid! Huset ser helt nytt ut. Profesjonelt team som holdt alle frister.",
+      "comment_en": "Fantastic work! The house looks completely new. Professional team that met all deadlines.",
+      "date": "2024-03-20"
+    },
+    {
+      "client": "Nordland Consulting AS",
+      "project": "Kontor Mosjøen Interiør", 
+      "rating": 5,
+      "comment_no": "Svært fornøyd med resultatet. Kontorene ser moderne og profesjonelle ut.",
+      "comment_en": "Very satisfied with the result. The offices look modern and professional.",
+      "date": "2024-05-10"
+    },
+    {
+      "client": "Hemnes Kommune",
+      "project": "Barnehage Hemnes Fargerikt",
+      "rating": 5,
+      "comment_no": "Barna elsker de nye fargene! Allergivennlig maling var viktig for oss.",
+      "comment_en": "The children love the new colors! Hypoallergenic paint was important to us.",
+      "date": "2024-06-20"
+    }
+  ],
+  "meta": {
+    "last_updated": "2024-09-15",
+    "version": "1.0",
+    "total_records": 10,
+    "featured_projects": [1, 3, 4, 6, 9]
+  }
+}

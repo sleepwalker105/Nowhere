@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-translate="projects-title">Prosjekter - Nordmaling AS</title>
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="../css/themes.css">
+    <link rel="stylesheet" href="../css/responsive.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .projects-hero {
+            background: var(--gradient);
+            padding: 150px 20px 80px;
+            text-align: center;
+            color: white;
+        }
+        
+        .search-filter-section {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 15px;
+            margin: 2rem 0;
+            box-shadow: var(--shadow);
+        }
+        
+        .search-box {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        
+        .search-input {
+            flex: 1;
+            padding: 1rem;
+            border: 2px solid var(--border-color);
+            border-radius: 10px;
+            font-size: 1rem;
+            background: var(--bg-color);
+            color: var(--text-color);
+        }
+        
+        .search-btn {
+            background: var(--gradient);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        
+        .filter-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        
+        .filter-btn {
+            background: var(--bg-color);
+            color: var(--text-color);
+            border: 2px solid var(--border-color);
+            padding: 0.7rem 1.5rem;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .filter-btn.active,
+        .filter-btn:hover {
+            background: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+        
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .project-card {
+            background: var(--card-bg);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+        }
+        
+        .project-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+        }
+        
+        .project-image {
+            width: 100%;
+            height: 250px;
+            background: var(--gradient);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .project-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: all 0.3s ease;
+        }
+        
+        .project-card:hover .project-image img {
+            filter: blur(2px);
+            transform: scale(1.1);
+        }
+        
+        .project-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+        
+        .project-card:hover .project-overlay {
+            opacity: 1;
+        }
+        
+        .project-title-overlay {
+            color: white;
+            font-size: 1.5rem;
+            font-weight: bold;
+            text-align: center;
+        }
+        
+        .project-info {
+            padding: 1.5rem;
+        }
+        
+        .project-category {
+            background: var(--accent-color);
+            color: var(--text-color);
+            padding: 0.3rem 1rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            display: inline-block;
+            margin-bottom: 1rem;
+        }
+        
+        .project-name {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: var(--secondary-color);
+            margin-bottom: 0.5rem;
+        }
+        
+        .project-desc {
+            color: var(--text-color);
+            line-height: 1.5;
+        }
+        
+        .coming-soon {
+            text-align: center;
+            padding: 4rem 2rem;
+            background: var(--card-bg);
+            border-radius: 15px;
+            margin: 2rem 0;
+        }
+        
+        .coming-soon h2 {
+            color: var(--primary-color);
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .admin-panel-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 1rem;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.2rem;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+        }
+        
+        .admin-panel-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+        }
+        
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 2000;
+        }
+        
+        .modal.show {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal-content {
+            background: var(--bg-color);
+            border-radius: 15px;
+            max-width: 90%;
+            max-height: 90%;
+            overflow: auto;
+            position: relative;
+        }
+        
+        .modal-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 0.5rem;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.2rem;
+            z-index: 1;
+        }
+        
+        .project-detail {
+            padding: 2rem;
+        }
+        
+        .project-detail h2 {
+            color: var(--secondary-color);
+            margin-bottom: 1rem;
+        }
+        
+        .project-images {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+        
+        .project-images img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <h2 data-translate="company-name">Nordmaling AS</h2>
+            </div>
+            <div class="nav-menu">
+                <a href="../index.html" class="nav-link" data-translate="nav-home">Hjem</a>
+                <a href="projects.html" class="nav-link active" data-translate="nav-projects">Prosjекter</a>
+                <a href="services.html" class="nav-link" data-translate="nav-services">Tjenester</a>
+                <a href="map.html" class="nav-link" data-translate="nav-map">Dekningsområde</a>
+                <a href="contact.html" class="nav-link" data-translate="nav-contact">Kontakt</a>
+            </div>
+            <div class="nav-controls">
+                <button id="language-selector" onclick="toggleLanguage()" aria-label="Switch language">
+                    NO
+                </button>
+                <button id="theme-toggle" onclick="toggleTheme()">
+                    <i class="fas fa-moon"></i>
+                </button>
+                <div class="hamburger" onclick="toggleMobileMenu()">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Projects Hero -->
+    <section class="projects-hero">
+        <div class="container">
+            <h1 data-translate="projects-hero-title">Våre Prosjекter</h1>
+            <p data-translate="projects-hero-desc">Se eksempler på vårt arbeid og la deg inspirere</p>
+        </div>
+    </section>
+
+    <!-- Search and Filter -->
+    <section class="container" style="padding: 40px 20px;">
+        <div class="search-filter-section">
+            <div class="search-box">
+                <input type="text" class="search-input" id="projectSearch" placeholder="Søk etter prosjекter..." data-translate-placeholder="search-placeholder">
+                <button class="search-btn" onclick="searchProjects()" data-translate="search-btn">Søk</button>
+            </div>
+            
+            <div class="filter-buttons">
+                <button class="filter-btn active" data-category="all" onclick="filterProjects('all')" data-translate="filter-all">Alle</button>
+                <button class="filter-btn" data-category="exterior" onclick="filterProjects('exterior')" data-translate="filter-exterior">Utendørs maling</button>
+                <button class="filter-btn" data-category="interior" onclick="filterProjects('interior')" data-translate="filter-interior">Innendørs maling</button>
+                <button class="filter-btn" data-category="roof-painting" onclick="filterProjects('roof-painting')" data-translate="filter-roof-painting">Takmaling</button>
+                <button class="filter-btn" data-category="roof-cleaning" onclick="filterProjects('roof-cleaning')" data-translate="filter-roof-cleaning">Takrensing</button>
+                <button class="filter-btn" data-category="waste" onclick="filterProjects('waste')" data-translate="filter-waste">Avfallshåndtering</button>
+                <button class="filter-btn" data-category="other" onclick="filterProjects('other')" data-translate="filter-other">Annet</button>
+            </div>
+        </div>
+
+        <!-- Projects Grid -->
+        <div class="projects-grid" id="projectsGrid">
+            <!-- Projects will be loaded here by JavaScript -->
+        </div>
+
+        <!-- Coming Soon -->
+        <div class="coming-soon">
+            <h2 data-translate="coming-soon-title">Mer kommer snart!</h2>
+            <p data-translate="coming-soon-desc">Vi jobber kontinuerlig med nye prosjекter. Kom tilbake snart for å se flere av våre arbeider.</p>
+        </div>
+    </section>
+
+    <!-- Admin Panel Button -->
+    <button class="admin-panel-btn" onclick="openAdminPanel()" title="Admin Panel">
+        <i class="fas fa-cog"></i>
+    </button>
+
+    <!-- Project Detail Modal -->
+    <div class="modal" id="projectModal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeProjectModal()">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="project-detail" id="projectDetail">
+                <!-- Project details will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Admin Panel Modal -->
+    <div class="modal" id="adminModal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeAdminPanel()">
+                <i class="fas fa-times"></i>
+            </button>
+            <div id="adminPanel">
+                <!-- Admin panel will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3 data-translate="company-name">Nordmaling AS</h3>
+                    <p data-translate="footer-description">Profesjonell malertjeneste i Norge siden 2008</p>
+                </div>
+                <div class="footer-section">
+                    <h4 data-translate="footer-contact">Kontakt</h4>
+                    <p>Email: o21072005@gmail.com</p>
+                    <p>Telefon: +47 123 45 678</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Nordmaling AS. <span data-translate="footer-rights">Alle rettigheter forbeholdt.</span></p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../js/translations.js"></script>
+    <script src="../js/main.js"></script>
+    <script src="../js/projects.js"></script>
+    <script src="../js/admin.js"></script>
+</body>
+</html>
