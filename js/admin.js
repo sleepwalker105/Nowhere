@@ -1,6 +1,9 @@
-// Admin Panel for Project Management - English Version
+// Admin Panel for Project Management - Always English
 let isAdminMode = false;
 let currentEditingProject = null;
+
+// Force English for admin panel (independent of site language)
+const ADMIN_LANGUAGE = 'en';
 
 // Check loading
 console.log('Admin panel script loaded! 🔧');
@@ -15,11 +18,12 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
-// Create admin button
+// Create admin button with English tooltip
 function createAdminButton() {
     const adminButton = document.createElement('button');
     adminButton.id = 'admin-toggle';
     adminButton.innerHTML = '<i class="fas fa-cog"></i>';
+    adminButton.title = 'Open Admin Panel'; // Always English
     adminButton.style.cssText = `
         position: fixed;
         bottom: 20px;
@@ -52,7 +56,7 @@ function createAdminButton() {
     console.log('Admin button created! ⚙️');
 }
 
-// Create admin panel
+// Create admin panel - Always in English
 function createAdminPanel() {
     const adminPanel = document.createElement('div');
     adminPanel.id = 'admin-panel';
@@ -69,19 +73,40 @@ function createAdminPanel() {
         transition: right 0.3s ease;
         overflow-y: auto;
         border-left: 3px solid var(--primary-color);
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     `;
     
-    adminPanel.innerHTML = `
+    adminPanel.innerHTML = getAdminPanelHTML();
+    document.body.appendChild(adminPanel);
+    console.log('Admin panel created! 📋');
+}
+
+// Get admin panel HTML (always English)
+function getAdminPanelHTML() {
+    return `
         <div style="padding: 2rem;">
             <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 2rem;">
                 <h2 style="color: var(--primary-color); margin: 0;">
                     <i class="fas fa-tools"></i> Admin Panel
                 </h2>
-                <button onclick="closeAdminPanel()" style="background: none; border: none; font-size: 1.5rem; cursor: pointer; color: var(--text-color);">
+                <button onclick="closeAdminPanel()" 
+                        style="background: none; border: none; font-size: 1.5rem; cursor: pointer; color: var(--text-color);"
+                        title="Close Admin Panel">
                     <i class="fas fa-times"></i>
                 </button>
             </div>
             
+            <!-- User Info Section -->
+            <div class="admin-section" style="margin-bottom: 2rem; padding: 1rem; background: var(--card-bg); border-radius: 10px; border-left: 4px solid var(--accent-color);">
+                <h4 style="color: var(--accent-color); margin: 0 0 0.5rem 0; display: flex; align-items: center; gap: 0.5rem;">
+                    <i class="fab fa-github"></i> Welcome, sleepwalker105
+                </h4>
+                <p style="margin: 0; font-size: 0.9rem; color: var(--text-color); opacity: 0.8;">
+                    Admin access to Nordmaling AS project management
+                </p>
+            </div>
+            
+            <!-- Add Project Section -->
             <div class="admin-section">
                 <h3 style="color: var(--secondary-color); margin-bottom: 1rem;">
                     <i class="fas fa-plus-circle"></i> Add New Project
@@ -90,60 +115,78 @@ function createAdminPanel() {
                 <form id="admin-project-form" onsubmit="handleProjectSubmit(event)">
                     <div class="form-group" style="margin-bottom: 1rem;">
                         <label style="display: block; margin-bottom: 0.5rem; font-weight: bold;">Project Name *</label>
-                        <input type="text" id="project-name" required style="width: 100%; padding: 0.8rem; border: 2px solid var(--border-color); border-radius: 8px; background: var(--card-bg); color: var(--text-color);">
+                        <input type="text" id="project-name" required 
+                               placeholder="e.g. Villa Hansen Exterior Painting"
+                               style="width: 100%; padding: 0.8rem; border: 2px solid var(--border-color); border-radius: 8px; background: var(--card-bg); color: var(--text-color);">
                     </div>
                     
                     <div class="form-group" style="margin-bottom: 1rem;">
                         <label style="display: block; margin-bottom: 0.5rem; font-weight: bold;">Category *</label>
-                        <select id="project-category" required style="width: 100%; padding: 0.8rem; border: 2px solid var(--border-color); border-radius: 8px; background: var(--card-bg); color: var(--text-color);">
+                        <select id="project-category" required 
+                                style="width: 100%; padding: 0.8rem; border: 2px solid var(--border-color); border-radius: 8px; background: var(--card-bg); color: var(--text-color);">
                             <option value="">Select Category</option>
                             <option value="exterior">Exterior Painting</option>
                             <option value="interior">Interior Painting</option>
                             <option value="roof-painting">Roof Painting</option>
                             <option value="roof-cleaning">Roof Cleaning</option>
                             <option value="waste">Waste Management</option>
-                            <option value="other">Other</option>
+                            <option value="other">Other Services</option>
                         </select>
                     </div>
                     
                     <div class="form-group" style="margin-bottom: 1rem;">
                         <label style="display: block; margin-bottom: 0.5rem; font-weight: bold;">Description *</label>
-                        <textarea id="project-description" required rows="4" style="width: 100%; padding: 0.8rem; border: 2px solid var(--border-color); border-radius: 8px; background: var(--card-bg); color: var(--text-color); resize: vertical;"></textarea>
+                        <textarea id="project-description" required rows="4" 
+                                  placeholder="Describe the project in detail..."
+                                  style="width: 100%; padding: 0.8rem; border: 2px solid var(--border-color); border-radius: 8px; background: var(--card-bg); color: var(--text-color); resize: vertical;"></textarea>
                     </div>
                     
                     <div class="form-group" style="margin-bottom: 1rem;">
                         <label style="display: block; margin-bottom: 0.5rem; font-weight: bold;">Location</label>
-                        <input type="text" id="project-location" placeholder="e.g. Mo i Rana" style="width: 100%; padding: 0.8rem; border: 2px solid var(--border-color); border-radius: 8px; background: var(--card-bg); color: var(--text-color);">
+                        <input type="text" id="project-location" 
+                               placeholder="e.g. Mo i Rana, Helgeland"
+                               style="width: 100%; padding: 0.8rem; border: 2px solid var(--border-color); border-radius: 8px; background: var(--card-bg); color: var(--text-color);">
                     </div>
                     
                     <div class="form-row" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
                         <div class="form-group">
                             <label style="display: block; margin-bottom: 0.5rem; font-weight: bold;">Duration</label>
-                            <input type="text" id="project-duration" placeholder="e.g. 5 days" style="width: 100%; padding: 0.8rem; border: 2px solid var(--border-color); border-radius: 8px; background: var(--card-bg); color: var(--text-color);">
+                            <input type="text" id="project-duration" 
+                                   placeholder="e.g. 5 days"
+                                   style="width: 100%; padding: 0.8rem; border: 2px solid var(--border-color); border-radius: 8px; background: var(--card-bg); color: var(--text-color);">
                         </div>
                         <div class="form-group">
                             <label style="display: block; margin-bottom: 0.5rem; font-weight: bold;">Area</label>
-                            <input type="text" id="project-area" placeholder="e.g. 180 m²" style="width: 100%; padding: 0.8rem; border: 2px solid var(--border-color); border-radius: 8px; background: var(--card-bg); color: var(--text-color);">
+                            <input type="text" id="project-area" 
+                                   placeholder="e.g. 180 m²"
+                                   style="width: 100%; padding: 0.8rem; border: 2px solid var(--border-color); border-radius: 8px; background: var(--card-bg); color: var(--text-color);">
                         </div>
                     </div>
                     
                     <div class="form-group" style="margin-bottom: 1rem;">
                         <label style="display: block; margin-bottom: 0.5rem; font-weight: bold;">Client</label>
-                        <input type="text" id="project-client" placeholder="e.g. Hansen Family" style="width: 100%; padding: 0.8rem; border: 2px solid var(--border-color); border-radius: 8px; background: var(--card-bg); color: var(--text-color);">
+                        <input type="text" id="project-client" 
+                               placeholder="e.g. Hansen Family / Nordland Company AS"
+                               style="width: 100%; padding: 0.8rem; border: 2px solid var(--border-color); border-radius: 8px; background: var(--card-bg); color: var(--text-color);">
                     </div>
                     
                     <div class="form-group" style="margin-bottom: 1.5rem;">
-                        <label style="display: block; margin-bottom: 0.5rem; font-weight: bold;">Images</label>
-                        <input type="file" id="project-images" multiple accept="image/*" style="width: 100%; padding: 0.8rem; border: 2px solid var(--border-color); border-radius: 8px; background: var(--card-bg); color: var(--text-color);">
-                        <small style="color: var(--text-color); opacity: 0.7;">You can select multiple images</small>
+                        <label style="display: block; margin-bottom: 0.5rem; font-weight: bold;">Project Images</label>
+                        <input type="file" id="project-images" multiple accept="image/*" 
+                               style="width: 100%; padding: 0.8rem; border: 2px solid var(--border-color); border-radius: 8px; background: var(--card-bg); color: var(--text-color);">
+                        <small style="color: var(--text-color); opacity: 0.7; display: block; margin-top: 0.3rem;">
+                            <i class="fas fa-info-circle"></i> Select multiple images to showcase the project
+                        </small>
                     </div>
                     
-                    <button type="submit" style="width: 100%; padding: 1rem; background: var(--gradient); color: white; border: none; border-radius: 10px; font-weight: bold; cursor: pointer; font-size: 1rem;">
+                    <button type="submit" 
+                            style="width: 100%; padding: 1rem; background: var(--gradient); color: white; border: none; border-radius: 10px; font-weight: bold; cursor: pointer; font-size: 1rem; transition: all 0.3s ease;">
                         <i class="fas fa-plus"></i> Add Project
                     </button>
                 </form>
             </div>
             
+            <!-- Existing Projects Section -->
             <div class="admin-section" style="margin-top: 2rem; padding-top: 2rem; border-top: 2px solid var(--border-color);">
                 <h3 style="color: var(--secondary-color); margin-bottom: 1rem;">
                     <i class="fas fa-list"></i> Existing Projects
@@ -153,35 +196,68 @@ function createAdminPanel() {
                 </div>
             </div>
             
+            <!-- Management Tools Section -->
             <div class="admin-section" style="margin-top: 2rem; padding-top: 2rem; border-top: 2px solid var(--border-color);">
                 <h3 style="color: var(--secondary-color); margin-bottom: 1rem;">
-                    <i class="fas fa-tools"></i> Tools
+                    <i class="fas fa-tools"></i> Management Tools
                 </h3>
-                <button onclick="clearAllProjects()" style="width: 100%; padding: 0.8rem; background: #dc3545; color: white; border: none; border-radius: 8px; cursor: pointer; margin-bottom: 0.5rem;">
-                    <i class="fas fa-trash"></i> Delete All Projects
-                </button>
-                <button onclick="exportProjects()" style="width: 100%; padding: 0.8rem; background: var(--secondary-color); color: white; border: none; border-radius: 8px; cursor: pointer; margin-bottom: 0.5rem;">
-                    <i class="fas fa-download"></i> Export Projects
-                </button>
-                <button onclick="importProjects()" style="width: 100%; padding: 0.8rem; background: var(--accent-color); color: white; border: none; border-radius: 8px; cursor: pointer;">
-                    <i class="fas fa-upload"></i> Import Projects
-                </button>
+                <div style="display: grid; gap: 0.5rem;">
+                    <button onclick="exportProjects()" 
+                            style="width: 100%; padding: 0.8rem; background: var(--secondary-color); color: white; border: none; border-radius: 8px; cursor: pointer; transition: all 0.3s ease;">
+                        <i class="fas fa-download"></i> Export Projects (JSON)
+                    </button>
+                    <button onclick="importProjects()" 
+                            style="width: 100%; padding: 0.8rem; background: var(--accent-color); color: white; border: none; border-radius: 8px; cursor: pointer; transition: all 0.3s ease;">
+                        <i class="fas fa-upload"></i> Import Projects
+                    </button>
+                    <button onclick="clearAllProjects()" 
+                            style="width: 100%; padding: 0.8rem; background: #dc3545; color: white; border: none; border-radius: 8px; cursor: pointer; transition: all 0.3s ease;">
+                        <i class="fas fa-trash"></i> Delete All Projects
+                    </button>
+                </div>
                 <input type="file" id="import-file" accept=".json" style="display: none;" onchange="handleImportFile(this)">
             </div>
             
+            <!-- Statistics Section -->
             <div class="admin-section" style="margin-top: 2rem; padding-top: 2rem; border-top: 2px solid var(--border-color);">
                 <h3 style="color: var(--secondary-color); margin-bottom: 1rem;">
-                    <i class="fas fa-info-circle"></i> Statistics
+                    <i class="fas fa-chart-bar"></i> Project Statistics
                 </h3>
                 <div id="admin-stats" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
                     <!-- Stats will be populated here -->
                 </div>
             </div>
+            
+            <!-- Quick Actions Section -->
+            <div class="admin-section" style="margin-top: 2rem; padding-top: 2rem; border-top: 2px solid var(--border-color);">
+                <h3 style="color: var(--secondary-color); margin-bottom: 1rem;">
+                    <i class="fas fa-bolt"></i> Quick Actions
+                </h3>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; font-size: 0.9rem;">
+                    <button onclick="addSampleProjects()" 
+                            style="padding: 0.6rem; background: var(--primary-color); color: white; border: none; border-radius: 6px; cursor: pointer;">
+                        <i class="fas fa-magic"></i> Add Samples
+                    </button>
+                    <button onclick="toggleAdminHelp()" 
+                            style="padding: 0.6rem; background: #17a2b8; color: white; border: none; border-radius: 6px; cursor: pointer;">
+                        <i class="fas fa-question-circle"></i> Help
+                    </button>
+                </div>
+                
+                <!-- Help Section (hidden by default) -->
+                <div id="admin-help" style="display: none; margin-top: 1rem; padding: 1rem; background: var(--card-bg); border-radius: 8px; font-size: 0.9rem;">
+                    <h4 style="margin: 0 0 0.5rem 0; color: var(--primary-color);">Admin Panel Help</h4>
+                    <ul style="margin: 0; padding-left: 1.2rem; line-height: 1.5;">
+                        <li><strong>Ctrl + Shift + A:</strong> Toggle admin panel</li>
+                        <li><strong>Escape:</strong> Close admin panel</li>
+                        <li><strong>Add Project:</strong> Fill required fields (*)</li>
+                        <li><strong>Images:</strong> Select multiple files for project gallery</li>
+                        <li><strong>Export/Import:</strong> Backup and restore projects</li>
+                    </ul>
+                </div>
+            </div>
         </div>
     `;
-    
-    document.body.appendChild(adminPanel);
-    console.log('Admin panel created! 📋');
 }
 
 // Toggle admin panel
@@ -198,9 +274,11 @@ function toggleAdminPanel() {
         panel.style.right = '0';
         updateAdminProjectsList();
         updateAdminStats();
+        showAdminNotification('Admin panel opened', 'info');
         console.log('Admin panel opened! 🔓');
     } else {
         panel.style.right = '-100%';
+        showAdminNotification('Admin panel closed', 'info');
         console.log('Admin panel closed! 🔒');
     }
 }
@@ -211,6 +289,7 @@ function closeAdminPanel() {
     if (panel) {
         panel.style.right = '-100%';
         isAdminMode = false;
+        showAdminNotification('Admin panel closed', 'info');
     }
 }
 
@@ -231,7 +310,7 @@ function handleProjectSubmit(event) {
     
     // Validation
     if (!formData.name || !formData.category || !formData.description) {
-        showNotification('Please fill in all required fields!', 'error');
+        showAdminNotification('Please fill in all required fields (marked with *)', 'error');
         return;
     }
     
@@ -292,17 +371,17 @@ async function saveProject(projectData, imageFiles) {
             // Clear form
             document.getElementById('admin-project-form').reset();
             
-            // Update admin list
+            // Update admin list and stats
             updateAdminProjectsList();
             updateAdminStats();
             
-            showNotification('Project added successfully!', 'success');
+            showAdminNotification(`Project "${newProject.name}" added successfully!`, 'success');
         }, 1000);
         
     } catch (error) {
         console.error('Save project error:', error);
         hideLoadingOverlay();
-        showNotification('Error saving project!', 'error');
+        showAdminNotification('Error saving project. Please try again.', 'error');
     }
 }
 
@@ -314,7 +393,13 @@ function updateAdminProjectsList() {
     const currentProjects = typeof projects !== 'undefined' ? projects : [];
     
     if (currentProjects.length === 0) {
-        listContainer.innerHTML = '<p style="text-align: center; color: var(--text-color); opacity: 0.7;">No projects yet</p>';
+        listContainer.innerHTML = `
+            <div style="text-align: center; padding: 2rem; color: var(--text-color); opacity: 0.7;">
+                <i class="fas fa-folder-open" style="font-size: 2rem; margin-bottom: 1rem; display: block;"></i>
+                <p style="margin: 0;">No projects yet</p>
+                <small>Add your first project using the form above</small>
+            </div>
+        `;
         return;
     }
     
@@ -323,16 +408,23 @@ function updateAdminProjectsList() {
             <div style="display: flex; justify-content: space-between; align-items: start;">
                 <div style="flex: 1;">
                     <h4 style="margin: 0 0 0.5rem 0; color: var(--secondary-color);">${project.name}</h4>
-                    <p style="margin: 0; font-size: 0.9rem; color: var(--text-color); opacity: 0.8;">${getCategoryDisplayName(project.category)} • ${project.location || 'Unknown location'}</p>
+                    <p style="margin: 0; font-size: 0.9rem; color: var(--text-color); opacity: 0.8;">
+                        ${getCategoryDisplayName(project.category)} • ${project.location || 'Location not specified'}
+                    </p>
                     <p style="margin: 0.5rem 0 0 0; font-size: 0.8rem; color: var(--text-color); opacity: 0.6;">
                         <i class="fas fa-calendar"></i> ${formatDate(project.date)}
+                        ${project.images && project.images.length > 0 ? ` • <i class="fas fa-images"></i> ${project.images.length} image${project.images.length > 1 ? 's' : ''}` : ''}
                     </p>
                 </div>
                 <div style="display: flex; gap: 0.5rem;">
-                    <button onclick="editProject(${project.id})" style="background: var(--secondary-color); color: white; border: none; padding: 0.3rem 0.6rem; border-radius: 4px; cursor: pointer; font-size: 0.8rem;">
+                    <button onclick="editProject(${project.id})" 
+                            title="Edit Project"
+                            style="background: var(--secondary-color); color: white; border: none; padding: 0.4rem 0.7rem; border-radius: 4px; cursor: pointer; font-size: 0.8rem;">
                         <i class="fas fa-edit"></i>
                     </button>
-                    <button onclick="deleteProject(${project.id})" style="background: #dc3545; color: white; border: none; padding: 0.3rem 0.6rem; border-radius: 4px; cursor: pointer; font-size: 0.8rem;">
+                    <button onclick="deleteProject(${project.id})" 
+                            title="Delete Project"
+                            style="background: #dc3545; color: white; border: none; padding: 0.4rem 0.7rem; border-radius: 4px; cursor: pointer; font-size: 0.8rem;">
                         <i class="fas fa-trash"></i>
                     </button>
                 </div>
@@ -365,20 +457,99 @@ function updateAdminStats() {
         return projectDate > monthAgo;
     }).length;
     
+    const projectsWithImages = currentProjects.filter(p => p.images && p.images.length > 0).length;
+    
     statsContainer.innerHTML = `
         <div style="background: var(--card-bg); padding: 1rem; border-radius: 8px; text-align: center;">
-            <div style="font-size: 1.5rem; font-weight: bold; color: var(--primary-color);">${totalProjects}</div>
+            <div style="font-size: 1.8rem; font-weight: bold; color: var(--primary-color);">${totalProjects}</div>
             <div style="font-size: 0.9rem; color: var(--text-color);">Total Projects</div>
         </div>
         <div style="background: var(--card-bg); padding: 1rem; border-radius: 8px; text-align: center;">
-            <div style="font-size: 1.5rem; font-weight: bold; color: var(--secondary-color);">${recentProjects}</div>
+            <div style="font-size: 1.8rem; font-weight: bold; color: var(--secondary-color);">${recentProjects}</div>
             <div style="font-size: 0.9rem; color: var(--text-color);">This Month</div>
         </div>
-        <div style="background: var(--card-bg); padding: 1rem; border-radius: 8px; text-align: center; grid-column: 1 / -1;">
-            <div style="font-size: 1rem; font-weight: bold; color: var(--accent-color);">${getCategoryDisplayName(mostCommonCategory)}</div>
-            <div style="font-size: 0.9rem; color: var(--text-color);">Most Common Category</div>
+        <div style="background: var(--card-bg); padding: 1rem; border-radius: 8px; text-align: center;">
+            <div style="font-size: 1.5rem; font-weight: bold; color: var(--accent-color);">${projectsWithImages}</div>
+            <div style="font-size: 0.9rem; color: var(--text-color);">With Images</div>
+        </div>
+        <div style="background: var(--card-bg); padding: 1rem; border-radius: 8px; text-align: center;">
+            <div style="font-size: 1rem; font-weight: bold; color: var(--primary-color);">
+                ${totalProjects > 0 ? getCategoryDisplayName(mostCommonCategory) : 'N/A'}
+            </div>
+            <div style="font-size: 0.9rem; color: var(--text-color);">Popular Category</div>
         </div>
     `;
+}
+
+// Add sample projects
+function addSampleProjects() {
+    if (!confirm('Add 3 sample projects? This will help you see how the system works.')) return;
+    
+    const sampleProjects = [
+        {
+            id: Date.now() + 1,
+            name: "Villa Nordland Exterior",
+            category: "exterior",
+            description: "Complete exterior painting of a traditional Norwegian villa. Included surface preparation and two coats of weather-resistant paint.",
+            location: "Mo i Rana",
+            duration: "5 days",
+            area: "200 m²",
+            client: "Nordland Family",
+            date: "2024-08-15",
+            images: ["https://via.placeholder.com/400x300/ff6b35/ffffff?text=Villa+Exterior"]
+        },
+        {
+            id: Date.now() + 2,
+            name: "Office Building Interior",
+            category: "interior",
+            description: "Modern interior painting for a commercial office space. Used neutral colors to create a professional work environment.",
+            location: "Mosjøen",
+            duration: "3 days",
+            area: "150 m²",
+            client: "Business Solutions AS",
+            date: "2024-09-01",
+            images: ["https://via.placeholder.com/400x300/004e89/ffffff?text=Office+Interior"]
+        },
+        {
+            id: Date.now() + 3,
+            name: "Roof Restoration Project",
+            category: "roof-painting",
+            description: "Professional roof painting and waterproofing. Applied high-quality coating to protect against Norwegian weather conditions.",
+            location: "Sandnessjøen",
+            duration: "4 days",
+            area: "120 m²",
+            client: "Coastal Properties",
+            date: "2024-09-10",
+            images: ["https://via.placeholder.com/400x300/ffd23f/333333?text=Roof+Project"]
+        }
+    ];
+    
+    // Add to projects
+    if (typeof projects !== 'undefined') {
+        projects.push(...sampleProjects);
+    } else {
+        window.projects = sampleProjects;
+    }
+    
+    // Save and update
+    localStorage.setItem('nordmaling_projects', JSON.stringify(projects));
+    
+    if (typeof renderProjects === 'function') {
+        renderProjects();
+    }
+    
+    updateAdminProjectsList();
+    updateAdminStats();
+    
+    showAdminNotification('3 sample projects added successfully!', 'success');
+}
+
+// Toggle admin help
+function toggleAdminHelp() {
+    const helpSection = document.getElementById('admin-help');
+    if (helpSection) {
+        helpSection.style.display = helpSection.style.display === 'none' ? 'block' : 'none';
+    }
 }
 
 // Edit project
@@ -405,7 +576,7 @@ function editProject(projectId) {
         submitBtn.style.background = 'var(--secondary-color)';
     }
     
-    showNotification('Project loaded for editing', 'info');
+    showAdminNotification(`Editing "${project.name}"`, 'info');
     
     // Scroll to form
     document.getElementById('project-name').scrollIntoView({ behavior: 'smooth' });
@@ -413,7 +584,10 @@ function editProject(projectId) {
 
 // Delete project
 function deleteProject(projectId) {
-    if (!confirm('Are you sure you want to delete this project?')) return;
+    const project = projects.find(p => p.id === projectId);
+    if (!project) return;
+    
+    if (!confirm(`Are you sure you want to delete "${project.name}"?\n\nThis action cannot be undone.`)) return;
     
     if (typeof projects !== 'undefined') {
         projects = projects.filter(p => p.id !== projectId);
@@ -425,13 +599,13 @@ function deleteProject(projectId) {
         updateAdminProjectsList();
         updateAdminStats();
         
-        showNotification('Project deleted!', 'success');
+        showAdminNotification(`Project "${project.name}" deleted successfully`, 'success');
     }
 }
 
 // Clear all projects
 function clearAllProjects() {
-    if (!confirm('Are you sure you want to delete ALL projects? This cannot be undone!')) return;
+    if (!confirm('⚠️ DELETE ALL PROJECTS?\n\nThis will permanently delete all projects from the website.\nThis action CANNOT be undone!\n\nAre you absolutely sure?')) return;
     
     if (typeof projects !== 'undefined') {
         projects.length = 0;
@@ -447,7 +621,7 @@ function clearAllProjects() {
     updateAdminProjectsList();
     updateAdminStats();
     
-    showNotification('All projects deleted!', 'success');
+    showAdminNotification('All projects deleted', 'success');
 }
 
 // Export projects
@@ -455,11 +629,19 @@ function exportProjects() {
     const currentProjects = typeof projects !== 'undefined' ? projects : [];
     
     if (currentProjects.length === 0) {
-        showNotification('No projects to export!', 'warning');
+        showAdminNotification('No projects to export', 'warning');
         return;
     }
     
-    const dataStr = JSON.stringify(currentProjects, null, 2);
+    const exportData = {
+        version: "1.0",
+        exported: new Date().toISOString(),
+        exportedBy: "sleepwalker105",
+        projectCount: currentProjects.length,
+        projects: currentProjects
+    };
+    
+    const dataStr = JSON.stringify(exportData, null, 2);
     const dataBlob = new Blob([dataStr], {type: 'application/json'});
     
     const link = document.createElement('a');
@@ -467,7 +649,7 @@ function exportProjects() {
     link.download = `nordmaling-projects-${new Date().toISOString().split('T')[0]}.json`;
     link.click();
     
-    showNotification('Projects exported!', 'success');
+    showAdminNotification(`${currentProjects.length} projects exported successfully!`, 'success');
 }
 
 // Import projects
@@ -483,9 +665,15 @@ function handleImportFile(input) {
     const reader = new FileReader();
     reader.onload = function(e) {
         try {
-            const importedProjects = JSON.parse(e.target.result);
+            const importData = JSON.parse(e.target.result);
+            let importedProjects = [];
             
-            if (!Array.isArray(importedProjects)) {
+            // Handle different import formats
+            if (importData.projects && Array.isArray(importData.projects)) {
+                importedProjects = importData.projects; // New format
+            } else if (Array.isArray(importData)) {
+                importedProjects = importData; // Old format
+            } else {
                 throw new Error('Invalid file format');
             }
             
@@ -498,13 +686,13 @@ function handleImportFile(input) {
                 throw new Error('Invalid project data structure');
             }
             
+            // Add unique IDs to prevent conflicts
+            importedProjects.forEach(project => {
+                project.id = Date.now() + Math.random();
+            });
+            
             // Merge with existing projects
             if (typeof projects !== 'undefined') {
-                // Add unique IDs to prevent conflicts
-                importedProjects.forEach(project => {
-                    project.id = Date.now() + Math.random();
-                });
-                
                 projects.push(...importedProjects);
             } else {
                 window.projects = importedProjects;
@@ -520,21 +708,85 @@ function handleImportFile(input) {
             updateAdminProjectsList();
             updateAdminStats();
             
-            showNotification(`${importedProjects.length} projects imported successfully!`, 'success');
+            showAdminNotification(`${importedProjects.length} projects imported successfully!`, 'success');
             
         } catch (error) {
             console.error('Import error:', error);
-            showNotification('Error importing projects. Please check file format.', 'error');
+            showAdminNotification('Import failed. Please check file format.', 'error');
         }
     };
     
     reader.readAsText(file);
-    
-    // Clear input
-    input.value = '';
+    input.value = ''; // Clear input
 }
 
-// Get category display name
+// Admin-specific notification system (always English)
+function showAdminNotification(message, type = 'info', duration = 3000) {
+    // Remove existing admin notifications
+    const existingNotifications = document.querySelectorAll('.admin-notification');
+    existingNotifications.forEach(notification => notification.remove());
+    
+    const notification = document.createElement('div');
+    notification.className = `admin-notification ${type}`;
+    
+    const icons = {
+        success: 'fas fa-check-circle',
+        error: 'fas fa-exclamation-circle',
+        warning: 'fas fa-exclamation-triangle',
+        info: 'fas fa-info-circle'
+    };
+    
+    notification.innerHTML = `
+        <div style="display: flex; align-items: center; gap: 0.8rem;">
+            <i class="${icons[type] || icons.info}"></i>
+            <span style="flex: 1;">${message}</span>
+            <button onclick="this.parentElement.parentElement.remove()" 
+                    style="background: none; border: none; color: inherit; cursor: pointer; opacity: 0.7; transition: opacity 0.2s;">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+    `;
+    
+    notification.style.cssText = `
+        position: fixed;
+        top: 80px;
+        right: 20px;
+        background: var(--card-bg);
+        color: var(--text-color);
+        padding: 1rem 1.5rem;
+        border-radius: 8px;
+        box-shadow: var(--shadow);
+        z-index: 10001;
+        border-left: 4px solid ${getNotificationColor(type)};
+        min-width: 300px;
+        max-width: 400px;
+        opacity: 0;
+        transform: translateX(100%);
+        transition: all 0.3s ease;
+        font-size: 0.9rem;
+    `;
+    
+    document.body.appendChild(notification);
+    
+    // Animate in
+    setTimeout(() => {
+        notification.style.opacity = '1';
+        notification.style.transform = 'translateX(0)';
+    }, 10);
+    
+    // Auto remove
+    if (duration > 0) {
+        setTimeout(() => {
+            if (notification.parentElement) {
+                notification.style.opacity = '0';
+                notification.style.transform = 'translateX(100%)';
+                setTimeout(() => notification.remove(), 300);
+            }
+        }, duration);
+    }
+}
+
+// Utility functions
 function getCategoryDisplayName(category) {
     const names = {
         'exterior': 'Exterior Painting',
@@ -542,12 +794,11 @@ function getCategoryDisplayName(category) {
         'roof-painting': 'Roof Painting',
         'roof-cleaning': 'Roof Cleaning',
         'waste': 'Waste Management',
-        'other': 'Other'
+        'other': 'Other Services'
     };
     return names[category] || 'Other';
 }
 
-// Format date
 function formatDate(dateString) {
     if (!dateString) return 'Unknown date';
     
@@ -559,6 +810,16 @@ function formatDate(dateString) {
     } catch (error) {
         return dateString;
     }
+}
+
+function getNotificationColor(type) {
+    const colors = {
+        success: '#28a745',
+        error: '#dc3545',
+        warning: '#ffc107',
+        info: '#17a2b8'
+    };
+    return colors[type] || colors.info;
 }
 
 // Keyboard shortcuts
@@ -628,7 +889,7 @@ function hideLoadingOverlay() {
     if (overlay) overlay.remove();
 }
 
-// Add spinner styles
+// Add admin-specific styles
 const adminStyles = document.createElement('style');
 adminStyles.textContent = `
     .loading-spinner {
@@ -679,6 +940,29 @@ adminStyles.textContent = `
         align-items: center;
         gap: 0.5rem;
     }
+
+    #admin-panel button:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    }
+
+    .admin-notification {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    @media (max-width: 768px) {
+        #admin-panel {
+            width: 100%;
+            max-width: 100vw;
+        }
+        
+        .admin-notification {
+            top: 70px;
+            right: 10px;
+            left: 10px;
+            min-width: auto;
+        }
+    }
 `;
 document.head.appendChild(adminStyles);
 
@@ -692,5 +976,8 @@ window.clearAllProjects = clearAllProjects;
 window.exportProjects = exportProjects;
 window.importProjects = importProjects;
 window.handleImportFile = handleImportFile;
+window.addSampleProjects = addSampleProjects;
+window.toggleAdminHelp = toggleAdminHelp;
 
-console.log('English Admin panel fully loaded! Ready to manage projects! 🚀');
+console.log('🔧 Admin panel loaded! Always in English for sleepwalker105 🚀');
+console.log('📋 Available shortcuts: Ctrl+Shift+A (open), Escape (close)');
